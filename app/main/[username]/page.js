@@ -233,22 +233,22 @@ export default function Home({ params }) {
   }
 
 
-  // useEffect(() => {
-  //   const check = async () => {
-  //     let data = {
-  //       username: database,
-  //     }
-  //     let a = await fetch("/server", { method: "PUT", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
-  //     let res = await a.json()
-  //     if (res.name == "not login user") {
-  //       router.push("/")
-  //     }
-  //   }
+  useEffect(() => {
+    const check = async () => {
+      let data = {
+        username: database,
+      }
+      let a = await fetch("/server", { method: "PUT", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
+      let res = await a.json()
+      if (res.name == "not login user") {
+        router.push("/")
+      }
+    }
 
-  //   check();
+    check();
 
 
-  // }, [router,database])
+  }, [router,database])
 
 
 

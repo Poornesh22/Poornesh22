@@ -81,7 +81,7 @@ const Page = () => {
 
                 <p className="mt-10 text-center text-sm text-gray-500">
                     First Time Visit?
-                    <Link href="/createnew" className="font-semibold leading-6 text-indigo-600 hover:text-blue-700 hover:underline text-lg">Create New Account</Link>
+                    <Link href="/createnew" className="font-semibold leading-6 text-indigo-600 hover:text-blue-700 hover:underline text-base">Create New Account</Link>
                 </p>
             </div>
         </div>
