@@ -46,6 +46,7 @@ const Delete = (props) => {
                 setdptable(true);
             }
         }
+        props.scroll()
     };
 
 
@@ -95,13 +96,13 @@ const Delete = (props) => {
     const randertable = () => {
         return (
             <>
-                <div className='overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent'>
-                    <table id='table-to-excel' className=" w-full border-collapse border bg-white border-gray-500 mt-4">
+                <div className='overflow-x-scroll scrollbar-thin scrollbar-thumb-red-400 scrollbar-track-transparent'>
+                    <table id='table-to-excel' className=" w-full border-collapse border bg-bltext-black border-black mt-4 bg-white">
                         <thead>
                             <tr>
-                                <th className="border border-gray-500 px-4 py-2">Day/Periods</th>
+                                <th className="border border-black px-4 py-2 sticky left-0 bg-pink-300">Day/Periods</th>
                                 {[...Array(columns)].map((_, i) => (
-                                    <th key={i} className="border border-gray-500 px-4 py-2">
+                                    <th key={i} className="border border-black px-4 py-2">
                                         Period {i + 1}
                                     </th>
                                 ))}
@@ -110,9 +111,9 @@ const Delete = (props) => {
                         <tbody>
                             {Object.entries(table1).filter(([days, value]) => days != "name" && days != "database" && days != "_id").map(([day, values]) => (
                                 <tr key={day}>
-                                    <td className="border border-gray-500 px-4 py-2">{day}</td>
+                                    <td className="border border-black px-4 py-2 sticky left-0 bg-pink-300">{day}</td>
                                     {values.map((allvalues, j) => (
-                                        <td key={j} className="border border-gray-500 px-4 py-2">
+                                        <td key={j} className="border border-black px-4 py-2">
                                             <div className="flex flex-col min-w-32 min-h-20">
                                                 <div>{allvalues[0]}</div>
                                                 <div>{allvalues[1]}</div>
@@ -131,34 +132,34 @@ const Delete = (props) => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-            <div className="w-full p-6 bg-red-800 border-2 border-black rounded-lg shadow-lg flex flex-col justify-normal">
-                <h2 className="text-2xl font-serif text-white font-semibold mb-4">Delete Timetable</h2>
+        <div className=" flex items-center justify-center bg-grey-100 p-2 mb-5">
+            <div className="w-full p-4 bg-red-400 border-b-2 border-l-4 border-red-500 rounded-3xl shadow-xl shadow-red-500 flex flex-col justify-normal">
+                <h2 className="text-2xl font-serif text-black font-semibold mb-4">Delete Timetable</h2>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-200 mb-2">Select a Stream</label>
-                    <select value={stval} onChange={(e) => setstval(e.target.value)} onClick={() => getdata("stream", "stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <label className="block text-sm font-medium text-black mb-2">Select a Stream</label>
+                    <select value={stval} onChange={(e) => setstval(e.target.value)} onClick={() => getdata("stream", "stream")} className="w-full px-3 py-2 border border-black rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {stream1.map(st => <option key={st} value={st} >{st}</option>)}
                     </select>
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-200 mb-2">Select a Department</label>
-                    <select value={dpval} onChange={(e) => setdpval(e.target.value)} onClick={() => getdata("department", stval, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <label className="block text-sm font-medium text-black mb-2">Select a Department</label>
+                    <select value={dpval} onChange={(e) => setdpval(e.target.value)} onClick={() => getdata("department", stval, "First select a stream")} className="w-full px-3 py-2 border border-black rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {department1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
                     </select>
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-200 mb-2">Select a Semester</label>
-                    <select value={seval} onChange={(e) => setseval(e.target.value)} onClick={() => getdata("semester", `S${stval}`, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <label className="block text-sm font-medium text-black mb-2">Select a Semester</label>
+                    <select value={seval} onChange={(e) => setseval(e.target.value)} onClick={() => getdata("semester", `S${stval}`, "First select a stream")} className="w-full px-3 py-2 border border-black rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {semester1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
                     </select>
                 </div>
 
                 <button
                     onClick={() => gettable("Tables", [stval, dpval, seval], "First select a Department")}
-                    className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
                 >
                     Get Table
                 </button>

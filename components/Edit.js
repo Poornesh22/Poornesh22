@@ -32,42 +32,42 @@ const Edit = (props) => {
             let a = await fetch("/main", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
             let res = await a.json();
             if (name1 == "stream") {
-                if(res.values == "" ){
-                  alert("No any stream found")
-                }else{
-                  setstream1(res.values)
+                if (res.values == "") {
+                    alert("No any stream found")
+                } else {
+                    setstream1(res.values)
                 }
-              } else if (name1 == "semester") {
-                if(res.values == "" ){
-                  alert("No any semester found")
-                }else{
-                  setsemester1(res.values)
+            } else if (name1 == "semester") {
+                if (res.values == "") {
+                    alert("No any semester found")
+                } else {
+                    setsemester1(res.values)
                 }
-              } else if (name1 == "department") {
-                if(res.values == "" ){
-                  alert("No any department found")
-                }else{
-                  setdepartment1(res.values)
+            } else if (name1 == "department") {
+                if (res.values == "") {
+                    alert("No any department found")
+                } else {
+                    setdepartment1(res.values)
                 }
-              } else if (name1 == "subject") {
-                if(res.values == "" ){
-                  alert("No any subject found")
-                }else{
-                  setsubject1(res.values)
+            } else if (name1 == "subject") {
+                if (res.values == "") {
+                    alert("No any subject found")
+                } else {
+                    setsubject1(res.values)
                 }
-              } else if (name1 == "teacher") {
-                if(res.values == "" ){
-                  alert("No any teacher name found")
-                }else{
-                  setteacher1(res.values)
+            } else if (name1 == "teacher") {
+                if (res.values == "") {
+                    alert("No any teacher name found")
+                } else {
+                    setteacher1(res.values)
                 }
-              } else {
-                if(res.values == "" ){
-                  alert("No any room found")
-                }else{
-                  setroom1(res.values)
+            } else {
+                if (res.values == "") {
+                    alert("No any room found")
+                } else {
+                    setroom1(res.values)
                 }
-              }
+            }
         }
 
     }
@@ -87,6 +87,7 @@ const Edit = (props) => {
             setcolumns(b?.Monday?.length);
             setTableVisible(true);
         }
+        props.scroll();
     };
 
 
@@ -148,66 +149,70 @@ const Edit = (props) => {
     const renderTable = () => {
 
         return (
-            <table className="w-full border-collapse border border-gray-500 mt-4">
-                <thead>
-                    <tr>
-                        <th className="border border-gray-500 px-4 py-2 sticky left-0">Day/Periods</th>
-                        {[...Array(columns)].map((_, i) => (
-                            <th key={i} className="border border-gray-500 px-4 py-2 min-w-40">
-                                Period {i + 1}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.entries(table1).filter(([days, value]) => days != "name" && days != "database" && days != "_id").map(([day, values]) => (
-                        <tr key={day}>
-                            <td className="border border-gray-500 px-4 py-2 sticky left-0">{day}</td>
-                            {values.map((allvalues, j) => (
-                                <td key={j} className="border border-gray-500 px-4 py-2">
-                                    <div className="space-y-2">
-                                        <select onChange={(e) => testing(day, j, 0, e.target.value)} value={allvalues[0]} className="w-full px-2 py-1 border border-gray-300 rounded">
-                                            {subject1.map(sub => <option key={sub} value={sub} >{sub}</option>)}
-                                        </select>
-                                        <select onChange={(e) => testing(day, j, 1, e.target.value)} value={allvalues[1]} className="w-full px-2 py-1 border border-gray-300 rounded">
-                                            {teacher1.filter((teacher) => teacher == allvalues[1] || !teacherd?.[day]?.[j]?.includes(teacher)).map(sub => <option key={sub} value={sub} >{sub}</option>)}
-                                        </select>
-                                        <select onChange={(e) => testing(day, j, 2, e.target.value)} value={allvalues[2]} className="w-full px-2 py-1 border border-gray-300 rounded">
-                                            {room1.filter((room) => room == allvalues[2] || !roomd?.[day]?.[j]?.includes(room)).map(sub => <option key={sub} value={sub}>{sub}</option>)}
-                                        </select>
-                                    </div>
-                                </td>
+            <>
+                <div className='overflow-x-scroll scrollbar-thin scrollbar-thumb-violet-300 scrollbar-track-transparent'>
+                    <table className="w-full border-collapse border border-gray-500 mt-4">
+                        <thead>
+                            <tr>
+                                <th className="border border-gray-500 px-4 py-2 sticky left-0 bg-indigo-300">Day/Periods</th>
+                                {[...Array(columns)].map((_, i) => (
+                                    <th key={i} className="border border-gray-500 px-4 py-2 min-w-40">
+                                        Period {i + 1}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.entries(table1).filter(([days, value]) => days != "name" && days != "database" && days != "_id").map(([day, values]) => (
+                                <tr key={day}>
+                                    <td className="border border-gray-500 px-4 py-2 sticky left-0 bg-indigo-300">{day}</td>
+                                    {values.map((allvalues, j) => (
+                                        <td key={j} className="border border-gray-500 px-4 py-2">
+                                            <div className="space-y-2">
+                                                <select onChange={(e) => testing(day, j, 0, e.target.value)} value={allvalues[0]} className="w-full px-2 py-1 border border-gray-300 rounded">
+                                                    {subject1.map(sub => <option key={sub} value={sub} >{sub}</option>)}
+                                                </select>
+                                                <select onChange={(e) => testing(day, j, 1, e.target.value)} value={allvalues[1]} className="w-full px-2 py-1 border border-gray-300 rounded">
+                                                    {teacher1.filter((teacher) => teacher == allvalues[1] || !teacherd?.[day]?.[j]?.includes(teacher)).map(sub => <option key={sub} value={sub} >{sub}</option>)}
+                                                </select>
+                                                <select onChange={(e) => testing(day, j, 2, e.target.value)} value={allvalues[2]} className="w-full px-2 py-1 border border-gray-300 rounded">
+                                                    {room1.filter((room) => room == allvalues[2] || !roomd?.[day]?.[j]?.includes(room)).map(sub => <option key={sub} value={sub}>{sub}</option>)}
+                                                </select>
+                                            </div>
+                                        </td>
+                                    ))}
+                                </tr>
                             ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div >
+            </>
         );
     };
 
     return (
         <>
-            <div className="mt-5 flex items-center justify-center bg-gray-100 p-6">
-                <div className="w-full p-6 bg-violet-300 border-2 border-black rounded-lg shadow-lg flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
+            <div className="mt-5 flex items-center justify-center bg-gray-100 p-2 mb-5">
+                <div className="w-full p-4 bg-violet-300 border-t-4 border-l-4 border-violet-400 rounded-3xl shadow-xl shadow-violet-400 flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-violet-300 scrollbar-track-transparent">
                     <h2 className="text-xl font-serif font-bold mb-4">Edit Timetable</h2>
 
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Select a Stream</label>
-                        <select onClick={() => getdata("stream", "stream")} onChange={(e) => { setvalue1(e.target.value) }} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select onClick={() => getdata("stream", "stream")} onChange={(e) => { setvalue1(e.target.value) }} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             {stream1.map(st => <option key={st} value={st} >{st}</option>)}
                         </select>
                     </div>
 
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Select a Department</label>
-                        <select onChange={(e) => { setvalue2(e.target.value) }} onClick={() => getdata("department", value1, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select onChange={(e) => { setvalue2(e.target.value) }} onClick={() => getdata("department", value1, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             {department1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
                         </select>
                     </div>
 
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Select a Semester</label>
-                        <select onChange={(e) => { setvalue3(e.target.value) }} onClick={() => getdata("semester", `S${value1}`, "first select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select onChange={(e) => { setvalue3(e.target.value) }} onClick={() => getdata("semester", `S${value1}`, "first select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             {semester1.map(se => <option key={se} value={se} >{se}</option>)}
                         </select>
                     </div>
@@ -215,7 +220,7 @@ const Edit = (props) => {
 
                     <button
                         onClick={handleCreateTable}
-                        className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                        className=" self-center w-auto px-4 py-4 text-base bg-blue-500 text-white font-semibold rounded-full shadow-3xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
                     >
                         Edit Table
                     </button>
@@ -225,7 +230,7 @@ const Edit = (props) => {
                     {tableVisible && (
                         <button
                             onClick={Submit_table}
-                            className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
+                            className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
                         >
                             Submit
                         </button>

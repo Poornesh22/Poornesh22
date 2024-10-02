@@ -10,12 +10,25 @@ export const metadata = {
   description: "this website is used for management",
 };
 
+export const generateViewport = () => ({
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: 'no',
+});
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className} >
         {children}
-        </body>
+        <footer className="bg-cyan-950 fixed w-full bottom-0 text-white shadow-inner shadow-black">
+          <ul className="flex justify-around p-1 text-[10px] sm:text-base font-serif">
+            <li>Copyright &copy; Poornesh Mishra</li>
+            <li> poorneshmishra10@gmail.com</li>
+          </ul>
+        </footer>
+      </body>
     </html>
   );
 }

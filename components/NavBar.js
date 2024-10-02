@@ -141,7 +141,7 @@ const NavBar = (props) => {
 
     return (
         <>
-            <div className={`fixed z-50 top-0 left-0 h-full w-64 bg-gray-800 text-white transform transition-transform duration-1000 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+            <div className={`fixed overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent z-50 top-0 left-0 h-full sm:w-72 w-56 bg-gray-800 text-white transform transition-transform duration-1000 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
                 }`}>
                     <h2 className='text-2xl border-white border-b-2 p-3 pl-5 font-semibold'>Table</h2>
                 <ul className="space-y-5 p-3 pl-5 flex flex-col">
@@ -153,24 +153,24 @@ const NavBar = (props) => {
 
                 <h2 className='text-2xl border-white border-b-2 border-t-2 p-3 pl-5 font-semibold mt-5'>Account</h2>
                 <ul className="space-y-4 p-3 pl-5 flex flex-col">
-                    <Link href="/" className='self-start'><button className='self-start hover:underline text-lg text-white mr-0 ml-0 hover:text-sky-400'>LogOut</button></Link>
-                    <button onClick={deletacc} className='self-start hover:underline text-lg text-white mr-0 ml-0 pl-0 hover:text-sky-400'>Permanent delete account</button>
-                    <button onClick={gen1} className='self-start hover:underline text-lg text-white mr-0 ml-0 hover:text-sky-400'>Teacher&apos;s Key</button>
-                    <button onClick={gen2} className='self-start hover:underline text-lg text-white mr-0 ml-0 hover:text-sky-400'>Principal Office Key</button>
+                    <Link href="/" className='self-start'><button className='self-start hover:underline sm:text-lg text-sm text-white mr-0 ml-0 hover:text-sky-400'>LogOut</button></Link>
+                    <button onClick={deletacc} className='self-start hover:underline sm:text-lg text-sm text-white mr-0 ml-0 pl-0 hover:text-sky-400'>Permanent delete account</button>
+                    <button onClick={gen1} className='self-start hover:underline sm:text-lg text-sm text-white mr-0 ml-0 hover:text-sky-400'>Teacher&apos;s Key</button>
+                    <button onClick={gen2} className='self-start hover:underline sm:text-lg text-sm text-white mr-0 ml-0 hover:text-sky-400'>Principal Office Key</button>
 
                 </ul>
 
 
             </div>
-            <div className={`fixed z-50 bg-white rounded-3xl p-2 top-0 w-full transform transition-transform duration-1000 ease-in-out ${isOpen ? 'translate-x-[240px]' : 'translate-x-0'} `}>
+            <div className={`fixed z-50 bg-white rounded-3xl p-2 top-0 w-full transform transition-transform duration-1000 ease-in-out ${isOpen ? 'sm:translate-x-[270px] translate-x-[210px]' : 'translate-x-0'} `}>
                 <button
                     onClick={sb5}
-                    className='bg-blue-500 text-white px-4 py-2 rounded-3xl'
+                    className='bg-blue-500 text-white px-4 py-2 rounded-3xl w-36 text-xs sm:w-44 sm:text-base'
                 >
                     {isOpen ? 'Close Sidebar' : 'Table and Account'}
                 </button>
             </div>
-            <h1 className={`sticky top-12 z-50 border-b-2 border-green-500 space-x-1 font-serif p-3 rounded-3xl bg-green-200 w-full text-4xl text-center font-semibold text-green-700 transform transition-transform duration-1000 ease-in-out  ${isOpen ? 'translate-x-72' : 'translate-x-0'}`}><span className='font-bold text-5xl text-green-500'>W</span>elcome <span className='font-bold text-5xl text-green-500'>I</span>n <span className='font-bold text-5xl text-green-500'>S</span>chedular</h1>
+            <h1 className={`sticky top-10 sm:top-12 z-50 border-b-2 border-green-500 space-x-1 font-serif p-3 rounded-3xl bg-green-200 w-full sm:text-4xl text-2xl text-center font-semibold text-green-700 transform transition-transform duration-1000 ease-in-out  ${isOpen ? 'sm:translate-x-72 translate-x-56' : 'translate-x-0'}`}><span className='font-bold sm:text-5xl text-4xl text-green-500'>W</span>elcome <span className='font-bold sm:text-5xl text-4xl text-green-500'>I</span>n <span className='font-bold sm:text-5xl text-4xl text-green-500'>S</span>chedular</h1>
         </>
     )
 }

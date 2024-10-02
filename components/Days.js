@@ -24,8 +24,8 @@ const Days = (props) => {
             settable1(res);
             setdptable(true);
         }
+        props.scroll();
     };
-
 
     const normal = () => {
         setrval("")
@@ -53,8 +53,8 @@ const Days = (props) => {
                                     <td className="border border-gray-500 px-4 py-2 sticky left-0 bg-purple-200">{day}</td>
                                     {values.map((allvalues, j) => (
                                         <td key={j} className="border border-gray-500 px-1 py-1">
-                                            <div className="flex min-w-44 h-auto text-xs">
-                                            {[...Array(allvalues.length)].map((_, i) => (allvalues[i] != "" ? ((i+1) % 5 == 0 ? <span key={i}>{allvalues[i]}</span>:<span key={i}>{allvalues[i]}/</span>): "" ))}
+                                            <div className="flex min-w-72 max-w-96 h-auto text-xs">
+                                            {[...Array(allvalues.length)].map((_, i) => (allvalues[i] != "" ? ((i+1) % 5 == 0 ? <span key={i}>{allvalues[i]}</span>:<span key={i}>{allvalues[i]}&nbsp;/</span>): "" ))}
                                             </div>
                                         </td>
                                     ))}
@@ -69,20 +69,20 @@ const Days = (props) => {
     }
 
     return (
-        <div className="mt-1 flex items-center justify-center bg-gray-100 p-1">
-            <div className="w-full p-5 bg-amber-300 border-2 border-black rounded-lg shadow-lg flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
+        <div className="mt-1 flex items-center justify-center bg-gray-100 p-2 mb-5">
+            <div className="w-full p-4 bg-amber-300 border-t-2 border-l-4 border-amber-400 rounded-3xl shadow-xl shadow-amber-400 flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
                 <h2 className="text-xl font-bold mb-4">Day wise Timetable with all room numbers </h2>
 
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select a Day</label>
-                    <select onChange={(e) => setrval(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select onChange={(e) => setrval(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {room1.map(st => <option key={st} value={st} >{st}</option>)}
                     </select>
                 </div>
 
                 <button
                     onClick={() => gettable(rval, "First select a Day")}
-                    className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
                 >
                     Get Table
                 </button>

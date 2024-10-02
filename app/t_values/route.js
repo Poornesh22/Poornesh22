@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 const client = new MongoClient(process.env.NEXT_MONGODB_URI);
 
 export async function POST(request){
+    try{
     let data = await request.json();
     let db = client.db(data.database);
     if(data.name == "room"){
@@ -16,6 +17,9 @@ export async function POST(request){
         const data1 = await collection1.findOne({name : "records"});
         return NextResponse.json(data1)
     }
+} catch {
+    return NextResponse.json({ values: ["Something went wrong Connection failed"] })
+}
 }
 
 export async function PUT(request){

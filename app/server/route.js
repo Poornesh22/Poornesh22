@@ -10,6 +10,7 @@ const collection = db.collection("blogs");
 
 
 export async function POST(request) {
+    try{
     let data = await request.json();
     const queary = {
         username: data.username,
@@ -22,9 +23,13 @@ export async function POST(request) {
         await collection.insertOne({username12 : data.username})
         return NextResponse.json({name : "login successful"});
     }
+} catch {
+    return NextResponse.json({ name: "Something went wrong Connection failed" })
+}
 }
 
 export async function PUT(request){
+    try{
     let data = await request.json();
     const check = await collection.findOne({username12 : data.username})
     if (check){
@@ -33,9 +38,13 @@ export async function PUT(request){
     }else{
         return NextResponse.json({name : "not login user"})
     }
+} catch {
+    return NextResponse.json({ name: "Something went wrong Connection failed" })
+}
 }
 
 export async function DELETE(request) {
+    try{
     let data = await request.json();
     const queary = {
         username: data.username,
@@ -47,4 +56,7 @@ export async function DELETE(request) {
     } else {
         return NextResponse.json({name : "login successful"});
     }
+} catch {
+    return NextResponse.json({ name: "Something went wrong Connection failed" })
+}
 }

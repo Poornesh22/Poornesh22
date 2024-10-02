@@ -29,6 +29,7 @@ const Teacher = (props) => {
             setcolumns(res?.Monday?.length);
             setdptable(true);
         }
+        props.scroll();
     };
 
 
@@ -99,34 +100,34 @@ const Teacher = (props) => {
     }
 
     return (
-        <div className="mt-1 flex items-center justify-center bg-gray-100 p-1">
-            <div className="w-full p-6 bg-amber-300 border-2 border-black rounded-lg shadow-lg flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
+        <div className="mt-1 flex items-center justify-center bg-gray-100 p-2 mb-5">
+            <div className="w-full p-4 bg-amber-300 border-b-2 border-r-4 border-amber-400 rounded-3xl shadow-xl shadow-amber-400 flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
                 <h2 className="text-xl font-bold mb-4">Teacher&apos;s Timetable</h2>
 
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select a Stream</label>
-                    <select onChange={(e) => setstval(e.target.value)} onClick={() => getdata("stream", "stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select onChange={(e) => setstval(e.target.value)} onClick={() => getdata("stream", "stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {stream1.map(st => <option key={st} value={st} >{st}</option>)}
                     </select>
                 </div>
 
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select a Department</label>
-                    <select onChange={(e) => setdpval(e.target.value)} onClick={() => getdata("department", stval, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select onChange={(e) => setdpval(e.target.value)} onClick={() => getdata("department", stval, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {department1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
                     </select>
                 </div>
 
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select a Teacher Name</label>
-                    <select onChange={(e) => settrval(e.target.value)} onClick={() => getdata("teacher", dpval, "First select a Department")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select onChange={(e) => settrval(e.target.value)} onClick={() => getdata("teacher", dpval, "First select a Department")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {teacher1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
                     </select>
                 </div>
 
                 <button
                     onClick={() => gettable(trval, "First select a Teacher name")}
-                    className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
                 >
                     Get Table
                 </button>

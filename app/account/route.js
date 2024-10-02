@@ -8,6 +8,7 @@ const collection = db.collection("blogs");
 
 
 export async function PUT(request) {
+    try{
     let data = await request.json();
     const query1 = {
         username: data.username
@@ -45,6 +46,9 @@ export async function PUT(request) {
     } else {
         return NextResponse.json({ msg: "Account is already exist." })
     }
+}catch{
+     return NextResponse.json({msg: "Something went wrong Connection failed"})
+}
 
 }
 

@@ -175,6 +175,7 @@ const Table = (props) => {
     } else {
       alert("column value is 0")
     }
+    props.scroll();
   };
 
   const Submit_table = async () => {
@@ -209,7 +210,7 @@ const Table = (props) => {
               <tr>
                 <th className="border border-gray-500 px-4 py-2 sticky left-0 bg-orange-200">Day/Periods</th>
                 {[...Array(columns)].map((_, i) => (
-                  <th key={i} className="border border-gray-500 px-4 py-2 min-w-40">
+                  <th key={i} className="border border-gray-500 px-4 py-2 min-w-40 ">
                     Period {i + 1}
                   </th>
                 ))}
@@ -245,27 +246,27 @@ const Table = (props) => {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-        <div className="w-full p-6 bg-orange-300 border-2 border-black rounded-lg shadow-lg flex flex-col justify-normal overflow-scroll">
+      <div className="flex items-center justify-center bg-gray-100 p-2 mb-10">
+        <div className="w-full p-4 bg-orange-300 border-r-4 border-t-4 border-orange-400 rounded-3xl shadow-xl shadow-orange-400 flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
           <h2 className="text-xl font-serif font-semibold mb-4">New Timetable</h2>
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Select a Stream</label>
-            <select onClick={() => getdata("stream", "stream")} onChange={(e) => { setvalue1(e.target.value) }} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select onClick={() => getdata("stream", "stream")} onChange={(e) => { setvalue1(e.target.value) }} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {stream1.map(st => <option key={st} value={st} >{st}</option>)}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Select a Department</label>
-            <select onChange={(e) => { setvalue2(e.target.value) }} onClick={() => getdata("department", value1, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select onChange={(e) => { setvalue2(e.target.value) }} onClick={() => getdata("department", value1, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {department1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Select a Semester</label>
-            <select onChange={(e) => { setvalue3(e.target.value) }} onClick={() => getdata("semester", `S${value1}`, "First select a Stream")} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select onChange={(e) => { setvalue3(e.target.value) }} onClick={() => getdata("semester", `S${value1}`, "First select a Stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {semester1.map(se => <option key={se} value={se} >{se}</option>)}
             </select>
           </div>
@@ -275,7 +276,7 @@ const Table = (props) => {
             <input
               type="number"
               onClick={() => getdata("subject", value3, "First select a semester")}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter number of columns"
               value={columns}
               onChange={handleColumnChange}
@@ -284,7 +285,7 @@ const Table = (props) => {
 
           <button
             onClick={handleCreateTable}
-            className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+            className=" self-center w-auto px-4 py-4 text-base bg-blue-500 text-white font-semibold rounded-full shadow-3xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
           >
             Create Table
           </button>
@@ -294,7 +295,7 @@ const Table = (props) => {
           {tableVisible && (
             <button
               onClick={Submit_table}
-              className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
+              className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
             >
               Submit
             </button>
