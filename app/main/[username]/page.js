@@ -257,8 +257,8 @@ export default function Home({ params }) {
       <div className=' rounded-lg sm:w-full '>
         <NavBar nt={n_t} et={e_t} vt={v_t} dt={d_t} database={database} />
         <div className=" rounded-lg w-full flex justify-center sm:mt-10 mt-3  bg-purple-100 pb-10">
-          <div className=" rounded-lg flex flex-col  sm:flex-row sm:flex-wrap sm:w-[65%] gap-12 mt-10 pt-5 ">
-            <div className=" rounded-lg self-center  w-72 sm:w-96 sm:h-[100vh] md:h-[73vh] p-6 bg-blue-200 shadow-lg hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
+          <div className=" rounded-lg flex flex-col  sm:flex-row sm:flex-wrap sm:w-[50%] md:w-[65%] gap-12 mt-10 pt-5 ">
+            <div className=" rounded-lg self-center  w-72 sm:w-96 sm:h-[400px] lg:h-[400px] p-6 bg-blue-200 shadow-lg hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
               <h2 className=" rounded-lg block text-2xl font-bold mb-4">Stream</h2>
               <div className=" rounded-lg mb-4">
                 <input
@@ -599,7 +599,7 @@ export default function Home({ params }) {
             </div>
 
 
-            <div className=" rounded-lg  self-center w-72 sm:w-96  p-6 bg-blue-200 shadow-lg sm:h-[100vh] md:h-[73vh] hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
+            <div className=" rounded-lg  self-center w-72 sm:w-96  p-6 bg-blue-200 shadow-lg sm:h-[400px] lg:h-[400px] hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
               <h2 className=" rounded-lg text-2xl font-bold mb-4">Room Numbers</h2>
               <div className=" rounded-lg mb-4">
                 <input
