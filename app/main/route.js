@@ -11,22 +11,6 @@ export async function POST(request) {
         const collection = db.collection(data1.collection);
         const course_d = await collection.findOne({ name: data1.name });
         if (course_d) {
-            course_d.values.sort((a, b) => {
-                const isANumeric = !isNaN(a);
-                const isBNumeric = !isNaN(b);
-                
-                if (isANumeric && isBNumeric) {
-                    return parseInt(a) - parseInt(b);
-                }
-                
-                if (!isANumeric && !isBNumeric) {
-                    return a.localeCompare(b);
-                }
-                if (isANumeric != "" || isANumeric != " "){
-                    return isANumeric ? 1 : -1;
-                }
-            });
-            console.log(course_d);
         
             return NextResponse.json(course_d)
         } else {

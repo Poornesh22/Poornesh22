@@ -40,7 +40,22 @@ const Room = (props) => {
             };
             let a = await fetch("/main", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
             let res = await a.json()
-            setroom1(res.values)
+            const course_d = [...res.values].sort((a, b) => {
+                const isANumeric = !isNaN(a);
+                const isBNumeric = !isNaN(b);
+    
+                if (isANumeric && isBNumeric) {
+                  return parseInt(a) - parseInt(b);
+                }
+    
+                if (!isANumeric && !isBNumeric) {
+                  return a.localeCompare(b);
+                }
+                if (isANumeric != "" || isANumeric != " ") {
+                  return isANumeric ? 1 : -1;
+                }
+              });
+            setroom1(course_d)
         };
 
     };

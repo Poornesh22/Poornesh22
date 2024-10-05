@@ -74,7 +74,22 @@ const Table = (props) => {
           setColumns(0)
           setTableVisible(false);
         } else {
-          setroom1(res.values)
+          const course_d = [...res.values].sort((a, b) => {
+            const isANumeric = !isNaN(a);
+            const isBNumeric = !isNaN(b);
+
+            if (isANumeric && isBNumeric) {
+              return parseInt(a) - parseInt(b);
+            }
+
+            if (!isANumeric && !isBNumeric) {
+              return a.localeCompare(b);
+            }
+            if (isANumeric != "" || isANumeric != " ") {
+              return isANumeric ? 1 : -1;
+            }
+          });
+          setroom1(course_d)
         }
       }
     }
@@ -198,6 +213,15 @@ const Table = (props) => {
     { getdata("room", "room") };
   };
 
+  const normal = () => {
+    setvalue1("");
+    setvalue2("");
+    setvalue3("");
+    setColumns(0);
+
+    setTableVisible(false)
+};
+
 
   const renderTable = () => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -252,21 +276,21 @@ const Table = (props) => {
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Select a Stream</label>
-            <select onClick={() => getdata("stream", "stream")} onChange={(e) => { setvalue1(e.target.value) }} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select onClick={() => getdata("stream", "stream")} onChange={(e) => { setvalue1(e.target.value) }} value={value1} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {stream1.map(st => <option key={st} value={st} >{st}</option>)}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Select a Department</label>
-            <select onChange={(e) => { setvalue2(e.target.value) }} onClick={() => getdata("department", value1, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select onChange={(e) => { setvalue2(e.target.value) }} onClick={() => getdata("department", value1, "First select a stream")} value={value2} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {department1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
             </select>
           </div>
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Select a Semester</label>
-            <select onChange={(e) => { setvalue3(e.target.value) }} onClick={() => getdata("semester", `S${value1}`, "First select a Stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select onChange={(e) => { setvalue3(e.target.value) }} onClick={() => getdata("semester", `S${value1}`, "First select a Stream")} value={value3} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {semester1.map(se => <option key={se} value={se} >{se}</option>)}
             </select>
           </div>
@@ -292,13 +316,20 @@ const Table = (props) => {
 
           {tableVisible && renderTable()}
 
-          {tableVisible && (
+          {tableVisible && (<>
             <button
               onClick={Submit_table}
               className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
             >
               Submit
             </button>
+            <button
+              onClick={normal}
+              className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
+            >
+              Back
+            </button>
+            </>
           )}
         </div>
       </div>

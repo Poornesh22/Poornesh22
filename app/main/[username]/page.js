@@ -141,7 +141,22 @@ export default function Home({ params }) {
           setsustdel("");
           setsstdel("");
         } else {
-          setroom1(res.values)
+          const course_d = [...res.values].sort((a, b) => {
+            const isANumeric = !isNaN(a);
+            const isBNumeric = !isNaN(b);
+
+            if (isANumeric && isBNumeric) {
+              return parseInt(a) - parseInt(b);
+            }
+
+            if (!isANumeric && !isBNumeric) {
+              return a.localeCompare(b);
+            }
+            if (isANumeric != "" || isANumeric != " ") {
+              return isANumeric ? 1 : -1;
+            }
+          });
+          setroom1(course_d)
           setcstdel("");
           setcsedel("");
           settstdel("");
@@ -247,7 +262,7 @@ export default function Home({ params }) {
     check();
 
 
-  }, [router,database])
+  }, [router, database])
 
 
 

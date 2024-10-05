@@ -94,6 +94,7 @@ export async function PUT(request) {
                 }
             }
         }
+        return NextResponse.json({values : "Edited Successfully"});
     } catch {
         return NextResponse.json({ values: ["Something went wrong Connection failed"] })
     }
