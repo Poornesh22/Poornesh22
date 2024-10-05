@@ -11,6 +11,23 @@ export async function POST(request) {
         const collection = db.collection(data1.collection);
         const course_d = await collection.findOne({ name: data1.name });
         if (course_d) {
+            course_d.values.sort((a, b) => {
+                const isANumeric = !isNaN(a);
+                const isBNumeric = !isNaN(b);
+                
+                if (isANumeric && isBNumeric) {
+                    return parseInt(a) - parseInt(b);
+                }
+                
+                if (!isANumeric && !isBNumeric) {
+                    return a.localeCompare(b);
+                }
+                if (isANumeric != "" || isANumeric != " "){
+                    return isANumeric ? 1 : -1;
+                }
+            });
+            console.log(course_d);
+        
             return NextResponse.json(course_d)
         } else {
             return NextResponse.json({ values: [""] })
@@ -40,7 +57,7 @@ export async function PUT(request) {
             await collection.insertOne({ name: data.name, values: ["", data.value] })
         }
     } else {
-        let che = await collection.findOne({ values: data.value })
+        let che = await collection.findOne({name : data.name,  values: data.value })
         if (!che) {
             await collection.updateOne({ name: data.name }, { $push: { values: data.value } })
         } else {

@@ -97,7 +97,6 @@ export default function Home({ params }) {
       };
       let a = await fetch("/main", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
       let res = await a.json()
-      console.log(res)
       if (res) {
         if (name1 == "stream") {
           setstream1(res.values)
