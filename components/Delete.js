@@ -114,7 +114,7 @@ const Delete = (props) => {
                                     <td className="border border-black px-4 py-2 sticky left-0 bg-pink-300">{day}</td>
                                     {values.map((allvalues, j) => (
                                         <td key={j} className="border border-black px-4 py-2">
-                                            <div className="flex flex-col min-w-32 min-h-20">
+                                            <div className="flex flex-col min-w-32 w-auto min-h-20 h-auto whitespace-nowrap">
                                                 <div>{allvalues[0]}</div>
                                                 <div>{allvalues[1]}</div>
                                                 <div>{allvalues[2]}</div>

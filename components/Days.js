@@ -53,10 +53,21 @@ const Days = (props) => {
                                     <td className="border border-gray-500 px-4 py-2 sticky left-0 bg-purple-200">{day}</td>
                                     {values.map((allvalues, j) => (
                                         <td key={j} className="border border-gray-500 px-1 py-1">
-                                            <div className="flex min-w-72 max-w-96 h-auto text-xs">
-                                            {[...Array(allvalues.length)].map((_, i) => (allvalues[i] != "" ? ((i+1) % 5 == 0 ? <span key={i}>{allvalues[i]}</span>:<span key={i}>{allvalues[i]}&nbsp;/</span>): "" ))}
-                                            </div>
-                                        </td>
+                                        <div className="flex items-center whitespace-nowrap overflow-hidden text-xs min-w-60 w-auto">
+                                          {[...Array(allvalues.length)].map((_, i) => (
+                                            allvalues[i] !== "" ? (
+                                              (i + 1) % 5 === 0 ? (
+                                                <span key={i} className="inline-block">{allvalues[i]}</span>
+                                              ) : (
+                                                <span key={i} className="inline-block">
+                                                  {allvalues[i]}&nbsp;/&nbsp;
+                                                </span>
+                                              )
+                                            ) : null
+                                          ))}
+                                        </div>
+                                      </td>
+                                      
                                     ))}
                                 </tr>
                             ))}

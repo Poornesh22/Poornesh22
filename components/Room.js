@@ -86,7 +86,7 @@ const Room = (props) => {
                                     <td className="border border-gray-500  px-4 py-2 bg-purple-200 sticky left-0">{day}</td>
                                     {values.map((allvalues, j) => (
                                         <td key={j} className="border border-gray-500 px-4 py-2">
-                                            <div className="flex flex-col w-28 h-20">
+                                            <div className="flex flex-col min-w-28 w-auto min-h-20 h-auto whitespace-nowrap">
                                                 <div>{allvalues[0]}</div>
                                                 <div>{allvalues[1]}</div>
                                                 <div>{allvalues[2]}</div>

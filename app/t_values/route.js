@@ -86,9 +86,9 @@ export async function DELETE(request) {
                     await collection1.updateOne({ name: data[day][i][2] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
                     await collection2.updateOne({ name: data[day][i][1] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
                     await collection4.updateOne({ name: data.name[1] }, { $pull: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                    await collection5.updateOne({ name: [data.name[0], data.name[2]] }, { $pull: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                    await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $pull: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } })
                     await collection.updateOne({ name: data.name[0] }, { $pull: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                    await collection.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: ["", "", "", "", ""] } })
+                    await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: ["", "", "", "", ""] } })
 
                 }
             }

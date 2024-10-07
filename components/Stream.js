@@ -85,10 +85,10 @@ const Stream = (props) => {
                                     <td className="border border-gray-500 px-4 py-2 sticky left-0 bg-purple-200">{day}</td>
                                     {values.map((allvalues, j) => (
                                         <td key={j} className="border border-gray-500 px-1 py-1">
-                                            <div className="flex flex-col min-w-60 min-h-20 text-xs">
+                                            <div className="flex flex-col min-w-60 w-auto min-h-20 h-auto text-xs">
                                                 {allvalues.map((val, x) => (
-                                                    <div key={x}>
-                                                        {[...Array(val.length)].map((_, i) => ((i + 1) % 5 == 0 ? <><span key={i}>{val[i]}</span><div className='w-60 bg-gray-600 h-[0.5px] p-0'></div></> : <span key={i}>{val[i]}/</span>))}
+                                                    <div key={x} className="border-b-[0.5px] border-black whitespace-nowrap">
+                                                        {[...Array(val.length)].map((_, i) => ((i + 1) % 5 == 0 ? <><span key={i}>{val[i]}</span></> : <span key={i}>{val[i]}/</span>))}
                                                     </div>
                                                 ))}
                                             </div>
