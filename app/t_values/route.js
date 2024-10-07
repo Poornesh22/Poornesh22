@@ -35,6 +35,7 @@ export async function PUT(request) {
     let c12 = await collection.findOne(data);
     if (!c12) {
         await collection.insertOne(data)
+        await collection.updateOne({name : "record"},{$push : {values : data.name}})
         for (let day in data) {
             if (day != "name" && day != "database") {
                 for (let i = 0; i < data[day].length; i++) {
@@ -71,12 +72,11 @@ export async function DELETE(request) {
     let collection4 = db.collection("department_table");
     let collection5 = db.collection("semester_table");
     let collection6 = db.collection("day_tables");
-    console.log(data)
 
     const data1 = await collection.findOne({ name: data.name })
-    console.log(data1)
 
     await collection.deleteOne({ name: data.name })
+    await collection.updateOne({name : "record"},{$pull : {values : data.name}})
     for (let day in data) {
         if (day != "name" && day != "database" && day != "_id") {
             for (let i = 0; i < data[day].length; i++) {

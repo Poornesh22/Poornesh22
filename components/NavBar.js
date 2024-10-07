@@ -27,6 +27,12 @@ const NavBar = (props) => {
         setIsOpen(false)
         props.dt()
     }
+
+    const sb6 = () =>{
+        setIsOpen(false)
+        props.at()
+    };
+
     const sb5 = () => {
         setIsOpen(!isOpen)
     }
@@ -153,6 +159,7 @@ const NavBar = (props) => {
                     <button onClick={sb2} className='self-start hover:underline text-xl text-white mr-0 ml-0 hover:text-green-400'>Edit Table</button>
                     <button onClick={sb3} className='self-start hover:underline text-xl text-white mr-0 ml-0 hover:text-green-400'>View Table</button>
                     <button onClick={sb4} className='self-start hover:underline text-xl text-white mr-0 ml-0 hover:text-green-400'>Delete Table</button>
+                    <button onClick={sb6} className='self-start hover:underline text-xl text-white mr-0 ml-0 hover:text-green-400'>All Tables</button>
                 </ul>
 
                 <h2 className='text-2xl border-white border-b-2 border-t-2 p-3 pl-5 font-semibold mt-5'>Account</h2>

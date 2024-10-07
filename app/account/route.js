@@ -29,7 +29,8 @@ export async function PUT(request) {
         await y.insertMany([{ name: "stream", values: [""] }, { name: "room", values: [" "] }]);
         let z = await x.createCollection("room_records");
         await z.insertOne({ name: "records", Monday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Tuesday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Wednesday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Thursday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Friday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Saturday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], })
-        await x.createCollection("Tables");
+        let x1 = await x.createCollection("Tables");
+        await x1.insertOne({name : "record",values : []});
         let a = await x.createCollection("teacher_table");
         await a.insertOne({ name: "records", Monday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Tuesday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Wednesday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Thursday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Friday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], Saturday: [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]], })
         await x.createCollection("room_table");

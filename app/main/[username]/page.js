@@ -11,6 +11,7 @@ import Semester from "@/components/Semester";
 import Delete from "@/components/Delete";
 import Stream from "@/components/Stream";
 import Days from "@/components/Days";
+import All_tables from "@/components/All_tables";
 
 export default function Home({ params }) {
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function Home({ params }) {
   const [edittable, setedittable] = useState(false);
   const [viewtable, setviewtable] = useState(false);
   const [deletetable, setdeletetable] = useState(false);
+  const [alltable, setalltable] = useState(false);
   const [d, setd] = useState(false);
   const [r, setr] = useState(false);
   const [t, sett] = useState(false);
@@ -207,6 +209,7 @@ export default function Home({ params }) {
   };
 
   const n_t = () => {
+    setalltable(false);
     setedittable(false);
     setviewtable(false);
     setdeletetable(false);
@@ -215,7 +218,7 @@ export default function Home({ params }) {
   }
 
   const e_t = () => {
-
+    setalltable(false);
     setnewtable(false);
     setviewtable(false);
     setdeletetable(false);
@@ -224,6 +227,7 @@ export default function Home({ params }) {
   }
 
   const v_t = () => {
+    setalltable(false);
     setedittable(false);
     setnewtable(false);
     setdeletetable(false);
@@ -233,11 +237,26 @@ export default function Home({ params }) {
   };
 
   const d_t = () => {
+    setalltable(false);
     setedittable(false);
     setnewtable(false);
     setviewtable(false);
     setdeletetable(true);
     scroll();
+  }
+
+  const a_t = () =>{
+    setedittable(false);
+    setnewtable(false);
+    setviewtable(false);
+    setdeletetable(false);
+    setalltable(true);
+    scroll();
+
+  }
+
+  const a_t1 = () =>{
+    setalltable(false)
   }
 
   const scroll = () => {
@@ -270,7 +289,7 @@ export default function Home({ params }) {
   return (
     <>
       <div className=' rounded-lg sm:w-full '>
-        <NavBar nt={n_t} et={e_t} vt={v_t} dt={d_t} database={database} />
+        <NavBar nt={n_t} et={e_t} vt={v_t} dt={d_t} at={a_t} database={database} />
         <div className=" rounded-lg w-full flex justify-center sm:mt-10 mt-3  bg-purple-100 pb-10">
           <div className=" rounded-lg flex flex-col  sm:flex-row sm:flex-wrap sm:w-[50%] md:w-[65%] gap-12 mt-10 pt-5 ">
             <div className=" rounded-lg self-center  w-72 sm:w-96 sm:h-[400px] lg:h-[400px] p-6 bg-blue-200 shadow-lg hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
@@ -680,6 +699,7 @@ export default function Home({ params }) {
           </div>
         </>)}
         {deletetable && <Delete scroll={scroll} database={database} />}
+        {alltable && <All_tables at = {a_t1} database={database}/>}
       </div>
     </>
   );
