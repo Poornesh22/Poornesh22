@@ -209,7 +209,6 @@ export default function Home({ params }) {
   };
 
   const n_t = () => {
-    setalltable(false);
     setedittable(false);
     setviewtable(false);
     setdeletetable(false);
@@ -218,7 +217,6 @@ export default function Home({ params }) {
   }
 
   const e_t = () => {
-    setalltable(false);
     setnewtable(false);
     setviewtable(false);
     setdeletetable(false);
@@ -227,7 +225,6 @@ export default function Home({ params }) {
   }
 
   const v_t = () => {
-    setalltable(false);
     setedittable(false);
     setnewtable(false);
     setdeletetable(false);
@@ -237,7 +234,6 @@ export default function Home({ params }) {
   };
 
   const d_t = () => {
-    setalltable(false);
     setedittable(false);
     setnewtable(false);
     setviewtable(false);
@@ -246,10 +242,6 @@ export default function Home({ params }) {
   }
 
   const a_t = () =>{
-    setedittable(false);
-    setnewtable(false);
-    setviewtable(false);
-    setdeletetable(false);
     setalltable(true);
     scroll();
 
