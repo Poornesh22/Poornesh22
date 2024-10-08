@@ -26,9 +26,9 @@ const All_tables = (props) => {
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-md z-50 ">
             <div className=" bg-white flex flex-col items-center bg-opacity-20 p-8 rounded-3xl shadow-lg">
-                <ol className="self-start text-3xl list-decimal list-inside text-white h-80 overflow-y-scroll scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent">
+                <ol className="self-start text-3xl list-decimal list-outside text-white h-80 overflow-y-scroll scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent">
                     {value.map((allvalues, i) => (
-                        <li key={i} className="text-base sm:text-2xl">[{allvalues[0]}, {allvalues[1]}, {allvalues[2]}]</li>
+                        <li key={i} className="text-base sm:text-2xl ml-16 p-2">[{allvalues[0]}, {allvalues[1]}, {allvalues[2]}]</li>
                     ))}
 
                 </ol>
