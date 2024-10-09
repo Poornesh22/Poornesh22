@@ -532,7 +532,7 @@ export default function Home({ params }) {
               </div>
 
               <button
-                onClick={() => deletedata([sustdel, csedel], sudel)}
+                onClick={() => deletedata("subject",[sustdel, csedel], sudel)}
                 className=" rounded-lg w-full px-4 py-2 bg-red-500 text-white font-semibold shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
               >
                 Delete
@@ -617,7 +617,7 @@ export default function Home({ params }) {
               </div>
 
               <button
-                onClick={() => deletedata(tdpdel, trdel)}
+                onClick={() => deletedata("teachers",tdpdel, trdel)}
                 className=" rounded-lg w-full px-4 py-2 bg-red-500 text-white font-semibold shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
               >
                 Delete
@@ -661,7 +661,7 @@ export default function Home({ params }) {
               </div>
 
               <button
-                onClick={() => deletedata("room", rdel)}
+                onClick={() => deletedata("room","room", rdel)}
                 className=" rounded-lg w-full px-4 py-2 bg-red-500 text-white font-semibold shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
               >
                 Delete
