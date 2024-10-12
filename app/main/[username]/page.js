@@ -356,7 +356,6 @@ export default function Home({ params }) {
                     value={stdel}
                     onClick={() => getdata("stream", "stream")}
                     id="added-streams"
-                    onBlur={() => {setstdel("")}}
                     onChange={(e) => { setstdel(e.target.value) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   >
@@ -365,7 +364,6 @@ export default function Home({ params }) {
                   {!isstedit ? (<select
                     value={estdel}
                     onClick={() => getdata("stream", "stream")}
-                    onBlur={() => { setisstedit(false); setestdel(""); setestentry("") }}
                     id="select-streams"
                     onChange={(e) => { setestdel(e.target.value); setestentry(e.target.value); setisstedit(true) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -375,7 +373,6 @@ export default function Home({ params }) {
                     value={estentry}
                     id="modify-stream"
                     onChange={(e) => { setestentry(e.target.value) }}
-                    onBlur={() => { setisstedit(false); setestdel(""); setestentry("") }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   )}
@@ -450,7 +447,6 @@ export default function Home({ params }) {
                     onClick={() => getdata("department", cstdel, "First select a stream")}
                     id="added-department"
                     onChange={(e) => { setdpdel(e.target.value) }}
-                    onBlur={() => {setdpdel("")}}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   >
                     {department1.map(dp => <option key={dp} value={dp}>{dp}</option>)}
@@ -458,7 +454,6 @@ export default function Home({ params }) {
                   {!isdpedit ? (<select
                     value={edpdel}
                     onClick={() => getdata("department", cstdel, "First select a stream")}
-                    onBlur={() => { setisdpedit(false); setedpdel(""); setedpentry("") }}
                     id="select-department"
                     onChange={(e) => { setedpdel(e.target.value); setedpentry(e.target.value); setisdpedit(true) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -468,7 +463,6 @@ export default function Home({ params }) {
                     value={edpentry}
                     id="modify-department"
                     onChange={(e) => { setedpentry(e.target.value) }}
-                    onBlur={() => { setisdpedit(false); setedpdel(""); setedpentry("") }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   )}
@@ -538,7 +532,6 @@ export default function Home({ params }) {
                   onClick={() => getdata("semester", `S${sstdel}`, "First select a Stream")}
                   id="added-semesters"
                   value={sedel}
-                  onBlur={() => {setsedel("")}}
                   onChange={(e) => { setsedel(e.target.value) }}
                   className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
@@ -547,7 +540,6 @@ export default function Home({ params }) {
                 {!isseedit ? (<select
                     value={esedel}
                     onClick={() => getdata("semester", `S${sstdel}`, "First select a Stream")}
-                    onBlur={() => { setisseedit(false); setesedel(""); seteseentry("") }}
                     id="select-department"
                     onChange={(e) => { setesedel(e.target.value); seteseentry(e.target.value); setisseedit(true) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -557,7 +549,6 @@ export default function Home({ params }) {
                     value={eseentry}
                     id="modify-department"
                     onChange={(e) => { seteseentry(e.target.value) }}
-                    onBlur={() => { setisseedit(false); setesedel(""); seteseentry("") }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   )}
@@ -650,7 +641,6 @@ export default function Home({ params }) {
                   onClick={() => getdata("subject", [`S${sustdel}`, csedel], "First select a semester")}
                   id="added-subjects"
                   value={sudel}
-                  onBlur={() => {setsudel("")}}
                   onChange={(e) => setsudel(e.target.value)}
                   className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
@@ -659,7 +649,6 @@ export default function Home({ params }) {
                 {!issuedit ? (<select
                     value={esudel}
                     onClick={() => getdata("subject", [`S${sustdel}`, csedel], "First select a semester")}
-                    onBlur={() => { setissuedit(false); setesudel(""); setesuentry("") }}
                     id="select-subject"
                     onChange={(e) => { setesudel(e.target.value); setesuentry(e.target.value); setissuedit(true) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -669,7 +658,6 @@ export default function Home({ params }) {
                     value={esuentry}
                     id="modify-subject"
                     onChange={(e) => { setesuentry(e.target.value) }}
-                    onBlur={() => { setissuedit(false); setesudel(""); setesuentry("") }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   )}
@@ -762,7 +750,6 @@ export default function Home({ params }) {
                   onClick={() => getdata("teacher", tdpdel, "First select a department")}
                   id="added-teachers"
                   value={trdel}
-                  onBlur={() => {settrdel("")}}
                   onChange={(e) => { settrdel(e.target.value) }}
                   className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
@@ -771,7 +758,6 @@ export default function Home({ params }) {
                 {!istredit ? (<select
                     value={esudel}
                     onClick={() => getdata("teacher", tdpdel, "First select a department")}
-                    onBlur={() => { setistredit(false); setetrdel(""); setetrentry("") }}
                     id="select-subject"
                     onChange={(e) => { setetrdel(e.target.value); setetrentry(e.target.value); setistredit(true) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -781,7 +767,6 @@ export default function Home({ params }) {
                     value={etrentry}
                     id="modify-subject"
                     onChange={(e) => { setetrentry(e.target.value) }}
-                    onBlur={() => { setistredit(false); setetrdel(""); setetrentry("") }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   )}
@@ -833,7 +818,6 @@ export default function Home({ params }) {
                   onClick={() => getdata("room", "room")}
                   id="added-room number"
                   value={rdel}
-                  onBlur={() => {setrdel("")}}
                   onChange={(e) => { setrdel(e.target.value) }}
                   className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
@@ -842,7 +826,6 @@ export default function Home({ params }) {
                 {!isredit ? (<select
                     value={esudel}
                     onClick={() => getdata("room", "room")}
-                    onBlur={() => { setisredit(false); seterdel(""); seterentry("") }}
                     id="select-subject"
                     onChange={(e) => { seterdel(e.target.value); seterentry(e.target.value); setisredit(true) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -852,7 +835,6 @@ export default function Home({ params }) {
                     value={erentry}
                     id="modify-subject"
                     onChange={(e) => { seterentry(e.target.value) }}
-                    onBlur={() => { setisredit(false); seterdel(""); seterentry("") }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   )}
