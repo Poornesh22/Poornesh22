@@ -33,13 +33,7 @@ export async function PUT(request) {
     let collection6 = db.collection("day_tables")
     let f1 = 0;
     const ch = await collection.findOne({ name: data.name })
-    if (!ch) {
-        if (data.name1 == "teacher") {
-            await collection.insertOne({ name: data.name, values: [" ", data.value] })
-        } else {
-            await collection.insertOne({ name: data.name, values: ["", data.value] })
-        }
-    } else {
+    if (ch) {
         let che = await collection.findOne({name : data.name,  values: data.value })
         if (!che) {
             await collection.updateOne({ name: data.name }, { $push: { values: data.value } })
@@ -60,8 +54,10 @@ export async function PUT(request) {
     } else if (data.name1 == "teacher") {
         await collection2.insertOne({ name: data.value, Monday: [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]], Tuesday: [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]], Wednesday: [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]], Thursday: [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]], Friday: [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]], Saturday: [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]], })
     } else if (data.name1 == "department") {
+        await collection.insertOne({ name: data.value, values: [" "]})
         await collection3.insertOne({ name: data.value, Monday: [[], [], [], [], [], [], [], [], [], [], [], []], Tuesday: [[], [], [], [], [], [], [], [], [], [], [], []], Wednesday: [[], [], [], [], [], [], [], [], [], [], [], []], Thursday: [[], [], [], [], [], [], [], [], [], [], [], []], Friday: [[], [], [], [], [], [], [], [], [], [], [], []], Saturday: [[], [], [], [], [], [], [], [], [], [], [], []], })
     } else if (data.name1 == "semester") {
+        await collection.insertOne({ name: [data.name,data.value], values: [""]})
         await collection4.insertOne({ name: [data.name, data.value], Monday: [[], [], [], [], [], [], [], [], [], [], [], []], Tuesday: [[], [], [], [], [], [], [], [], [], [], [], []], Wednesday: [[], [], [], [], [], [], [], [], [], [], [], []], Thursday: [[], [], [], [], [], [], [], [], [], [], [], []], Friday: [[], [], [], [], [], [], [], [], [], [], [], []], Saturday: [[], [], [], [], [], [], [], [], [], [], [], []], })
     } else if (data.name1 == "stream") {
         await collection.insertOne({ name: data.value, values: [""] })
@@ -88,10 +84,12 @@ export async function DELETE(request) {
         await collection6.updateOne({ name: data.name }, { $pull: { values: data.value } })
         await collection6.deleteOne({ name: data.value })
         await collection6.deleteOne({ name: `S${data.value}` })
-        await collection6.deleteOne({ ["name.0"]: data.value })
     } else if (data.name == "semester") {
         await collection6.updateOne({ name: data.name }, { $pull: { values: data.value } })
-        await collection6.deleteOne({ name: data.value })
+        await collection6.deleteOne({ ["name.0"] : data.name, ["name.1"] : data.value })
+    } else if(data.name == "department"){
+        await collection6.updateOne({name : data.name}, {$pull : {values : data.value}})
+        await collection6.deleteOne({name : data.value})
     } else {
         await collection6.updateOne({ name: data.name }, { $pull: { values: data.value } })
     }
