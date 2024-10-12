@@ -205,12 +205,31 @@ export default function Home({ params }) {
       let data = {
         database : database,
         name : name,
+        name1 : name1,
         orgvalue: orgval,
         modvalue: modval,
       };
       let a = await fetch("/check", {method : "PUT", header : {"content-type" : "application/json"},body : JSON.stringify(data)});
       let res = await a.json();
       alert("edited successfully")
+      setisdpedit(false);
+      setisredit(false);
+      setisseedit(false);
+      setisstedit(false);
+      setissuedit(false);
+      setistredit(false);
+      setedpdel("")
+      setedpentry("")
+      seterdel("")
+      seterentry("")
+      setestdel("")
+      setestentry("");
+      setesedel("")
+      seteseentry("")
+      setesudel("")
+      setesuentry("")
+      setetrdel("")
+      setetrentry("")
     }
   }
 
