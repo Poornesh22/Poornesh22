@@ -196,6 +196,7 @@ export default function Home({ params }) {
 
 
   const editdata = async (name,name1,orgval, modval) => {
+    alert("Wait: This Process will take few minutes or second")
     modval = modval.trim()
     if (orgval == ""){
       alert("First select a value")
@@ -211,7 +212,7 @@ export default function Home({ params }) {
       };
       let a = await fetch("/check", {method : "PUT", header : {"content-type" : "application/json"},body : JSON.stringify(data)});
       let res = await a.json();
-      alert("edited successfully")
+      alert("Edited successfully")
       setisdpedit(false);
       setisredit(false);
       setisseedit(false);
