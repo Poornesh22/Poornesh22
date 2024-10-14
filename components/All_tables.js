@@ -18,7 +18,7 @@ const All_tables = (props) => {
         };
 
         gettable();
-    }, [])
+    }, [props.database])
 
 
 

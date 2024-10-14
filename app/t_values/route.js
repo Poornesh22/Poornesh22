@@ -33,6 +33,7 @@ export async function PUT(request) {
     let collection5 = db.collection("semester_table");
     let collection6 = db.collection("day_tables");
     let c12 = await collection.findOne(data);
+    console.log(data);
     if (!c12) {
         await collection.insertOne(data)
         await collection.updateOne({name : "record"},{$push : {values : data.name}})
@@ -81,14 +82,23 @@ export async function DELETE(request) {
         if (day != "name" && day != "database" && day != "_id") {
             for (let i = 0; i < data[day].length; i++) {
                 if (data[day][i][2] != "" && data[day][i][1] != "" && data[day][i][0] != "") {
+
                     await collection3.updateOne({ name: "records" }, { $pull: { [`${day}.${i}`]: data[day][i][2] } })
+
                     await collection2.updateOne({ name: "records" }, { $pull: { [`${day}.${i}`]: data[day][i][1] } })
+
                     await collection1.updateOne({ name: data[day][i][2] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
+
                     await collection2.updateOne({ name: data[day][i][1] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
+
                     await collection4.updateOne({ name: data.name[1] }, { $pull: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+
                     await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $pull: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+
                     await collection.updateOne({ name: data.name[0] }, { $pull: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+
                     await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: ["", "", "", "", ""] } })
+                    
 
                 }
             }

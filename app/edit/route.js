@@ -48,15 +48,13 @@ export async function PUT(request) {
                             } else if (data1[day][i][0] == "" && data[day][i][0] != "") {
                                 await collection4.updateOne({ name: data.name[1] }, { $push: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
                                 await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $push: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                                await collection.updateOne({ name: data.name[0] }, { $pull: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection.updateOne({ name: data.name[0] }, { $push: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
                                 await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: [data.name[0], data.name[1], data.name[2], data[day][i][0], data[day][i][1]] } })
                             } else if (data1[day][i][0] != data[day][i][0] || data1[day][i][1] != data[day][i][1] || data1[day][i][2] != data[day][i][2]) {
                                 await collection4.updateOne({ name: data1.name[1] }, { $pull: { [`${day}.${i}`]: [data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
                                 await collection4.updateOne({ name: data.name[1] }, { $push: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $pull: { [`${day}.${i}`]: [data1.name[1], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
-                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $push: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                                await collection.updateOne({ name: data1.name[0] }, { $pull: { [`${day}.${i}`]: [data1.name[1], data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
-                                await collection.updateOne({ name: data.name[0] }, { $pull: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]], [`${day}.${i}`]: [data1.name[1], data1[day][i][0], data1[day][i][1], data1[day][i][2]] }, { $set: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } }, {returnDocument : 'after'})
+                                await collection.findOneAndUpdate({ name: data1.name[0],  [`${day}.${i}`]: [data1.name[1], data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]]  }, { $set : {  [`${day}.${i}.$`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } },{returnDocument : 'after'})
                                 await collection6.updateOne({ name: day }, { $set: { [`${data1[day][i][2]}.${i}`]: ["", "", "", "", ""] } })
                                 await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: [data.name[0], data.name[1], data.name[2], data[day][i][0], data[day][i][1]] } })
                             }

@@ -79,19 +79,42 @@ export async function DELETE(request) {
     try{
     let data = await request.json();
     const db = client.db(data.database);
-    const collection6 = db.collection("clg_data");
-    if (data.name == "stream") {
-        await collection6.updateOne({ name: data.name }, { $pull: { values: data.value } })
-        await collection6.deleteOne({ name: data.value })
-        await collection6.deleteOne({ name: `S${data.value}` })
-    } else if (data.name == "semester") {
-        await collection6.updateOne({ name: data.name }, { $pull: { values: data.value } })
-        await collection6.deleteOne({ ["name.0"] : data.name, ["name.1"] : data.value })
-    } else if(data.name == "department"){
-        await collection6.updateOne({name : data.name}, {$pull : {values : data.value}})
-        await collection6.deleteOne({name : data.value})
-    } else {
-        await collection6.updateOne({ name: data.name }, { $pull: { values: data.value } })
+    let collection = db.collection("clg_data")
+    let collection1 = db.collection("room_table")
+    let collection2 = db.collection("teacher_table")
+    let collection3 = db.collection("department_table")
+    let collection4 = db.collection("semester_table")
+    let collection5 = db.collection("Tables")
+    let collection6 = db.collection("day_tables")
+    if (data.name1 == "stream") {
+        await collection.updateOne({ name: data.name }, { $pull: { values: data.value } })
+        await collection.deleteOne({ name: data.value })
+        await collection.deleteOne({ name: `S${data.value}` })
+        await collection5.deleteOne({ name: data.value })
+    } else if (data.name1 == "semester") {
+        await collection.updateOne({ name: data.name }, { $pull: { values: data.value } })
+        await collection.deleteOne({ name : [data.name, data.value] })
+        await collection4.deleteOne({ name: [data.name, data.value]})
+    } else if(data.name1 == "department"){
+        await collection.updateOne({name : data.name}, {$pull : {values : data.value}})
+        await collection.deleteOne({name : data.value})
+        await collection3.deleteOne({ name: data.value})
+    } else if(data.name1 == "room"){
+        await collection.updateOne({ name: data.name }, { $pull: { values: data.value } })
+        await collection1.deleteOne({ name: data.value})
+        await collection6.updateOne({ name: "Monday" }, { $unset: { [`${data.value}`]: [["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]] } })
+        await collection6.updateOne({ name: "Tuesday" }, { $unset: { [`${data.value}`]: [["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]] } })
+        await collection6.updateOne({ name: "Wednesday" }, { $unset: { [`${data.value}`]: [["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]] } })
+        await collection6.updateOne({ name: "Thursday" }, { $unset: { [`${data.value}`]: [["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]] } })
+        await collection6.updateOne({ name: "Friday" }, { $unset: { [`${data.value}`]: [["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]] } })
+        await collection6.updateOne({ name: "Saturday" }, { $unset: { [`${data.value}`]: [["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]] } })
+
+    } else if(data.name1 == "teacher"){
+        await collection.updateOne({ name: data.name }, { $pull: { values: data.value } })
+        await collection2.deleteOne({ name: data.value})
+
+    }else {
+        await collection.updateOne({ name: data.name }, { $pull: { values: data.value } })
     }
     return NextResponse.json({ name: "Deleted Successfully" })
 } catch {

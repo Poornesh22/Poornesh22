@@ -192,27 +192,45 @@ export default function Home({ params }) {
         }
       }
     }
+    setisdpedit(false);
+    setisredit(false);
+    setisseedit(false);
+    setisstedit(false);
+    setissuedit(false);
+    setistredit(false);
+    setedpdel("")
+    setedpentry("")
+    seterdel("")
+    seterentry("")
+    setestdel("")
+    setestentry("");
+    setesedel("")
+    seteseentry("")
+    setesudel("")
+    setesuentry("")
+    setetrdel("")
+    setetrentry("")
   };
 
 
-  const editdata = async (name,name1,orgval, modval) => {
+  const editdata = async (name, name1, orgval, modval) => {
     alert("Wait: This Process will take few minutes or second")
     modval = modval.trim()
-    if (orgval == ""){
+    if (orgval == "") {
       alert("First select a value")
-    }else if (modval == "") {
+    } else if (modval == "") {
       alert("blank value is not acceptable")
     } else {
       let data = {
-        database : database,
-        name : name,
-        name1 : name1,
+        database: database,
+        name: name,
+        name1: name1,
         orgvalue: orgval,
         modvalue: modval,
       };
-      let a = await fetch("/check", {method : "PUT", header : {"content-type" : "application/json"},body : JSON.stringify(data)});
+      let a = await fetch("/check", { method: "PUT", header: { "content-type": "application/json" }, body: JSON.stringify(data) });
       let res = await a.json();
-      alert("Edited successfully")
+      alert(res.name);
       setisdpedit(false);
       setisredit(false);
       setisseedit(false);
@@ -249,24 +267,27 @@ export default function Home({ params }) {
       let a = await fetch("/check", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data) })
       let res = await a.json();
       if (res.name == "clear") {
-        alert("Now you are able to delete")
-        let a = await fetch("/main", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify(data) })
-        let res = await a.json();
-        alert("Deleted Successfully");
-        setstdel("");
-        setsedel("");
-        setdpdel("");
-        setsudel("");
-        settrdel("");
-        setrdel("");
-        setsstdel("");
-        settstdel("");
-        settdpdel("");
-        setsustdel("");
-        setcstdel("");
+        let x1 = confirm("Now you are able to delete")
+        if (x1) {
+          let a = await fetch("/main", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify(data) })
+          let res = await a.json();
+          alert("Deleted Successfully");
+
+        }
       } else {
         alert("Warning : First Delete all the dependencies then only you will be able to delete this value")
       }
+      setstdel("");
+      setsedel("");
+      setdpdel("");
+      setsudel("");
+      settrdel("");
+      setrdel("");
+      setsstdel("");
+      settstdel("");
+      settdpdel("");
+      setsustdel("");
+      setcstdel("");
     }
   };
 
@@ -401,13 +422,13 @@ export default function Home({ params }) {
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => deletedata("Stream", "stream", stdel)}
+                  onClick={() => deletedata("stream", "stream", stdel)}
                   className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Delete
                 </button>
                 <button
-                  onClick={() => editdata("stream","stream",estdel, estentry)}
+                  onClick={() => editdata("stream", "stream", estdel, estentry)}
                   className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Edit
@@ -497,7 +518,7 @@ export default function Home({ params }) {
                   Delete
                 </button>
                 <button
-                  onClick={() => editdata("department",cstdel,edpdel, edpentry)}
+                  onClick={() => editdata("department", cstdel, edpdel, edpentry)}
                   className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Edit
@@ -548,16 +569,16 @@ export default function Home({ params }) {
                   Choose a semester to delete or edit
                 </label>
                 <div className="flex gap-3">
-                <select
-                  onClick={() => getdata("semester", `S${sstdel}`, "First select a Stream")}
-                  id="added-semesters"
-                  value={sedel}
-                  onChange={(e) => { setsedel(e.target.value) }}
-                  className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  {semester1.map(semester => (<option key={semester} value={semester}>{semester}</option>))}
-                </select>
-                {!isseedit ? (<select
+                  <select
+                    onClick={() => getdata("semester", `S${sstdel}`, "First select a Stream")}
+                    id="added-semesters"
+                    value={sedel}
+                    onChange={(e) => { setsedel(e.target.value) }}
+                    className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {semester1.map(semester => (<option key={semester} value={semester}>{semester}</option>))}
+                  </select>
+                  {!isseedit ? (<select
                     value={esedel}
                     onClick={() => getdata("semester", `S${sstdel}`, "First select a Stream")}
                     id="select-department"
@@ -575,14 +596,14 @@ export default function Home({ params }) {
                 </div>
               </div>
               <div className="flex gap-3">
-              <button
-                onClick={() => deletedata("semester", `S${sstdel}`, sedel)}
-                className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
-              >
-                Delete
-              </button>
-              <button
-                  onClick={() => editdata("semester", `S${sstdel}`,esedel, eseentry)}
+                <button
+                  onClick={() => deletedata("semester", `S${sstdel}`, sedel)}
+                  className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => editdata("semester", `S${sstdel}`, esedel, eseentry)}
                   className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Edit
@@ -657,16 +678,16 @@ export default function Home({ params }) {
                   Choose a subject to delete or edit
                 </label>
                 <div className="flex gap-3">
-                <select
-                  onClick={() => getdata("subject", [`S${sustdel}`, csedel], "First select a semester")}
-                  id="added-subjects"
-                  value={sudel}
-                  onChange={(e) => setsudel(e.target.value)}
-                  className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  {subject1.map(subject => (<option key={subject} value={subject}>{subject}</option>))}
-                </select>
-                {!issuedit ? (<select
+                  <select
+                    onClick={() => getdata("subject", [`S${sustdel}`, csedel], "First select a semester")}
+                    id="added-subjects"
+                    value={sudel}
+                    onChange={(e) => setsudel(e.target.value)}
+                    className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {subject1.map(subject => (<option key={subject} value={subject}>{subject}</option>))}
+                  </select>
+                  {!issuedit ? (<select
                     value={esudel}
                     onClick={() => getdata("subject", [`S${sustdel}`, csedel], "First select a semester")}
                     id="select-subject"
@@ -684,14 +705,14 @@ export default function Home({ params }) {
                 </div>
               </div>
               <div className="flex gap-3">
-              <button
-                onClick={() => deletedata("subject", [`S${sustdel}`, csedel], sudel)}
-                className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
-              >
-                Delete
-              </button>
-              <button
-                  onClick={() => editdata("subject",[`S${sustdel}`, csedel], esudel, esuentry)}
+                <button
+                  onClick={() => deletedata("subject", [`S${sustdel}`, csedel], sudel)}
+                  className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => editdata("subject", [`S${sustdel}`, csedel], esudel, esuentry)}
                   className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Edit
@@ -766,16 +787,16 @@ export default function Home({ params }) {
                   Choose a teacher name to delete or edit
                 </label>
                 <div className="flex gap-3">
-                <select
-                  onClick={() => getdata("teacher", tdpdel, "First select a department")}
-                  id="added-teachers"
-                  value={trdel}
-                  onChange={(e) => { settrdel(e.target.value) }}
-                  className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  {teacher1.map(teacher => (<option key={teacher} value={teacher}>{teacher}</option>))}
-                </select>
-                {!istredit ? (<select
+                  <select
+                    onClick={() => getdata("teacher", tdpdel, "First select a department")}
+                    id="added-teachers"
+                    value={trdel}
+                    onChange={(e) => { settrdel(e.target.value) }}
+                    className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {teacher1.map(teacher => (<option key={teacher} value={teacher}>{teacher}</option>))}
+                  </select>
+                  {!istredit ? (<select
                     value={esudel}
                     onClick={() => getdata("teacher", tdpdel, "First select a department")}
                     id="select-subject"
@@ -793,13 +814,13 @@ export default function Home({ params }) {
                 </div>
               </div>
               <div className="flex gap-3">
-              <button
-                onClick={() => deletedata("teacher", tdpdel, trdel)}
-                className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
-              >
-                Delete
-              </button>
-              <button
+                <button
+                  onClick={() => deletedata("teacher", tdpdel, trdel)}
+                  className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+                >
+                  Delete
+                </button>
+                <button
                   onClick={() => editdata("teacher", tdpdel, etrdel, etrentry)}
                   className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
@@ -834,16 +855,16 @@ export default function Home({ params }) {
                   Choose a room number to delete or edit
                 </label>
                 <div className="flex gap-3">
-                <select
-                  onClick={() => getdata("room", "room")}
-                  id="added-room number"
-                  value={rdel}
-                  onChange={(e) => { setrdel(e.target.value) }}
-                  className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  {room1.map(room => (<option key={room} value={room}>{room}</option>))}
-                </select>
-                {!isredit ? (<select
+                  <select
+                    onClick={() => getdata("room", "room")}
+                    id="added-room number"
+                    value={rdel}
+                    onChange={(e) => { setrdel(e.target.value) }}
+                    className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {room1.map(room => (<option key={room} value={room}>{room}</option>))}
+                  </select>
+                  {!isredit ? (<select
                     value={esudel}
                     onClick={() => getdata("room", "room")}
                     id="select-subject"
@@ -861,14 +882,14 @@ export default function Home({ params }) {
                 </div>
               </div>
               <div className="flex gap-3">
-              <button
-                onClick={() => deletedata("room", "room", rdel)}
-                className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
-              >
-                Delete
-              </button>
-              <button
-                  onClick={() => editdata("room","room", erdel, erentry)}
+                <button
+                  onClick={() => deletedata("room", "room", rdel)}
+                  className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => editdata("room", "room", erdel, erentry)}
                   className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Edit
