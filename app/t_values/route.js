@@ -33,7 +33,7 @@ export async function PUT(request) {
     let collection5 = db.collection("semester_table");
     let collection6 = db.collection("day_tables");
     let c12 = await collection.findOne(data);
-    console.log(data);
+    
     if (!c12) {
         await collection.insertOne(data)
         await collection.updateOne({name : "record"},{$push : {values : data.name}})
