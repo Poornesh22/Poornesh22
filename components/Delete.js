@@ -38,7 +38,7 @@ const Delete = (props) => {
             };
             let a = await fetch("/main", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
             let res = await a.json()
-            if (res.name == "not exist") {
+            if (res.values == "") {
                 alert("Table not exist")
             } else {
                 settable1(res);
@@ -92,11 +92,16 @@ const Delete = (props) => {
 
     const delete_table = async () => {
         let a = await fetch("/t_values", { method: "DELETE", header: { "content-type": "application/json" }, body: JSON.stringify(table1) })
+        let res = await a.json();
+        if (res.name == "successful"){
         alert("delete successfully")
         setdptable(false)
         setstval("");
         setseval("");
         setdpval("");
+        } else {
+            alert("Wait, work in progress")
+        }
 
     }
 
@@ -104,7 +109,6 @@ const Delete = (props) => {
         setstval("");
         setseval("");
         setdpval("");
-
         setdptable(false)
     }
 

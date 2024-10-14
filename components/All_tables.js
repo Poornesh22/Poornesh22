@@ -4,8 +4,11 @@ import { get } from 'react-hook-form';
 import { useState } from 'react';
 
 const All_tables = (props) => {
+
     const [value, setvalue] = useState([""]);
+
     useEffect(() => {
+
         const gettable = async () => {
             let data = {
                 database: props.database,
@@ -14,6 +17,8 @@ const All_tables = (props) => {
             };
             let a = await fetch("/main", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
             let res = await a.json();
+            let x3 = res.values.length
+            alert(x3 + " Tables are created")
             setvalue(res.values);
         };
 
