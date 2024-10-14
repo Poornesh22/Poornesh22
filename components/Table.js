@@ -49,7 +49,22 @@ const Table = (props) => {
         if (res.values == "") {
           alert("No any department found")
         } else {
-          setdepartment1(res.values)
+          const course_d = [...res.values].sort((a, b) => {
+            const isANumeric = !isNaN(a);
+            const isBNumeric = !isNaN(b);
+
+            if (isANumeric && isBNumeric) {
+              return parseInt(a) - parseInt(b);
+            }
+
+            if (!isANumeric && !isBNumeric) {
+              return a.localeCompare(b);
+            }
+            if (isANumeric != "" || isANumeric != " ") {
+              return isANumeric ? 1 : -1;
+            }
+          });
+          setdepartment1(course_d)
         }
       } else if (name1 == "subject") {
         if (res.values == "") {

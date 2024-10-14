@@ -47,7 +47,22 @@ const Teacher = (props) => {
             if (name1 == "stream") {
                 setstream1(res.values);
             } else if (name1 == "department") {
-                setdepartment1(res.values);
+                const course_d = [...res.values].sort((a, b) => {
+                    const isANumeric = !isNaN(a);
+                    const isBNumeric = !isNaN(b);
+        
+                    if (isANumeric && isBNumeric) {
+                      return parseInt(a) - parseInt(b);
+                    }
+        
+                    if (!isANumeric && !isBNumeric) {
+                      return a.localeCompare(b);
+                    }
+                    if (isANumeric != "" || isANumeric != " ") {
+                      return isANumeric ? 1 : -1;
+                    }
+                  });
+                setdepartment1(course_d);
             } else {
                 setteacher1(res.values);
             }
