@@ -11,9 +11,11 @@ First download and install Node.js in your system. Then
  First download and install MongoDB in your system and then run this command (npm install mongodb)
 
  ## NEXT>>
- Clone the code from my github profile ( https://github.com/Poornesh22/Poornesh22.git ) RUn the following commands
- 1 - git clone https://github.com/Poornesh22/Poornesh22.git 
- 2 - cd Poornesh22
+ Clone the code from my github profile ( https://github.com/Poornesh22/Poornesh22.git ) Run the following commands
+ 1 - git clone https://github.com/Poornesh22/Poornesh22.git     
+ 
+ 2 - cd Poornesh22         
+ 
  3 - git checkout PortDash
 
  by running above three commands you completely clone this project.
