@@ -1,6 +1,6 @@
 ## Hi there 👋
-I am Poornesh Kumar Mishra, Complete Graduation in Computer Science form Hislop College, Maharashtra, India. I am very passionate about coding So,                       
-I start learning from youtube, after understanding the basics I develop small programs like select a number, find the factorial, fibonacci series, checking prime number.    
+I am Poornesh Kumar Mishra, Complete Graduation in Computer Science form Hislop College, Maharashtra, India. I am very passionate about coding So,
+I start learning from youtube, after understanding the basics I develop small programs like select a number, find the factorial, fibonacci series, checking prime number.
 Now I am full-Stack developer, I develop a website for Hislop College, Nagpur and now I am looking for best opportunities in Full-Stack Development.                           
 
 Full-Stack Web Development known languages and Frameworks:-                                                                                                                  
