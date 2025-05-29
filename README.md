@@ -1,6 +1,6 @@
 ## Hi there 👋
-I am Poornesh Kumar Mishra, Complete Graduation in Computer Science form Hislop College, Maharashtra, India. I am very passionate about coding So,                            
-I start learning from youtube, after understanding the basics I develop small programs like select a number, find the factorial, fibonacci series, checking prime number.      
+I am Poornesh Kumar Mishra, Complete Graduation in Computer Science form Hislop College, Maharashtra, India. I am very passionate about coding So,                       
+I start learning from youtube, after understanding the basics I develop small programs like select a number, find the factorial, fibonacci series, checking prime number.    
 Now I am full-Stack developer, I develop a website for Hislop College, Nagpur and now I am looking for best opportunities in Full-Stack Development.                           
 
 Full-Stack Web Development known languages and Frameworks:-                                                                                                                  
@@ -16,13 +16,16 @@ Python, Java, C++, C.
 My favorite Programming language is PYTHON becaues of its simplicity.
 
 
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="40" height="40"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="40" height="40"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" width="40" height="40"/>
 
 <!--
 **Poornesh22/Poornesh22** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
 Here are some ideas to get you started:
 
-- 🔭 I’m currently working on ...
+-  I’m currently working on ...
 - 🌱 I’m currently learning ...
 - 👯 I’m looking to collaborate on ...
 - 🤔 I’m looking for help with ...
