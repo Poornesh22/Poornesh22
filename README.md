@@ -1,5 +1,6 @@
 ## Hi there 👋
-I am Poornesh Kumar Mishra, Complete Graduation in Computer Science form Hislop College, Maharashtra, India. I am very passionate about coding So,
+I am Poornesh Kumar Mishra, Complete Graduation in 2025 in Computer Science form Hislop College, Maharashtra, India. I am very passionate about coding. Before class 10th I never 
+code a single line, my journey is begin from class 11th (2019) with python programming language and I found it very interesting, after completion of 12th (2021) I knew only python and MYSQL. Because of COVID I took 1 year gap (August 2021 - April 2022) I was very passionate so, I start code on Hackerrank and watching videos of CodeWithHarry on youtube and learn many more about coding. I took admission in Hislop College in B.Sc Computer Science in year 2022 that year I shift from prayagraj to Nagpur. In college, many other languages I learn (C, C++, Java, DSA in C++,  
 I start learning from youtube, after understanding the basics I develop small programs like select a number, find the factorial, fibonacci series, checking prime number.
 Now I am full-Stack developer, I develop a website for Hislop College, Nagpur and now I am looking for best opportunities in Full-Stack Development.                           
 
