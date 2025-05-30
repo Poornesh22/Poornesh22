@@ -88,7 +88,7 @@ const Stream = (props) => {
                                             <div className="flex flex-col min-w-60 w-auto min-h-20 h-auto text-xs">
                                                 {allvalues.map((val, x) => (
                                                     <div key={x} className="border-b-[0.5px] border-black whitespace-nowrap">
-                                                        {[...Array(val.length)].map((_, i) => ((i + 1) % 5 == 0 ? <><span key={i}>{val[i]}</span></> : <span key={i}>{val[i]}/</span>))}
+                                                        {[...Array(val.length)].map((_, i) => ((i + 1) % 6 == 0 ? <><span key={i}>{val[i]}</span></> : <span key={i}>{val[i]}&nbsp;/&nbsp;</span>))}
                                                     </div>
                                                 ))}
                                             </div>

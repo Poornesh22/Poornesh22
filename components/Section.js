@@ -1,15 +1,17 @@
 "use client"
-import React, { useState } from 'react'
-import * as XLSX from 'xlsx';
+import React from 'react'
+import { useState } from 'react';
 
-const Semester = (props) => {
+const Section = (props) => {
     var database = props.database;
 
     const [stream1, setstream1] = useState([""]);
-    const [semester1, setsemester1] = useState([""]);
+    const [department1, setdepartment1] = useState([""]);
+    const [section1, setsection1] = useState([""]);
     const [columns, setcolumns] = useState(0);
     const [stval, setstval] = useState("");
-    const [seval, setseval] = useState("");
+    const [dpval, setdpval] = useState("");
+    const [secval, setsecval] = useState("");
     const [dptable, setdptable] = useState(false);
     const [table1, settable1] = useState([""]);
 
@@ -23,8 +25,10 @@ const Semester = (props) => {
     const gettable = async (collection, name) => {
         if (stval == "") {
             alert("First select a stream")
-        } else if (seval == "") {
-            alert("First select a semester")
+        } else if (dpval == "") {
+            alert("First select a department")
+        } else if (secval == "") {
+            alert("First select a section")
         } else {
             let data = {
                 database: database,
@@ -42,7 +46,7 @@ const Semester = (props) => {
 
 
     const getdata = async (name1, name, msg = "") => {
-        if (name == "" || name == "S") {
+        if (name == "") {
             alert(msg)
         } else {
             let data = {
@@ -53,25 +57,32 @@ const Semester = (props) => {
             let a = await fetch("/main", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
             let res = await a.json()
             if (name1 == "stream") {
-                try{
-                setstream1(res.values)
-                }catch{
+                try {
+                    setstream1(res.values)
+                } catch {
+                    alert("Properly input data")
+                }
+            } else if (name1 == "department") {
+                try {
+                    setdepartment1(res.values)
+                } catch {
                     alert("Properly input data")
                 }
             } else {
-                try{
-                    setsemester1(res.values)
-                    }catch{
-                        alert("Properly input data")
-                    }
+                try {
+                    setsection1(res.values)
+                } catch {
+                    alert("Properly input data")
+                }
             }
         };
 
     };
 
-    const normal = () =>{
+    const normal = () => {
         setstval("");
-        setseval("");
+        setdpval("");
+        setsecval("");
         setdptable(false)
     }
 
@@ -96,10 +107,10 @@ const Semester = (props) => {
                                     <td className="border border-gray-500 px-4 py-2 sticky left-0 bg-purple-200">{day}</td>
                                     {values.map((allvalues, j) => (
                                         <td key={j} className="border border-gray-500 px-1 py-1">
-                                            <div className="flex flex-col min-w-44 w-auto min-h-20 text-xs">
+                                            <div className="flex flex-col whitespace-nowrap overflow-hidden min-w-44 w-auto min-h-20 h-auto text-xs">
                                                 {allvalues.map((val, x) => (
-                                                    <div key={x} className=" whitespace-nowrap text-xs border-b-[0.5px] border-black">
-                                                        {[...Array(val.length)].map((_, i) => ((i+1) % 5 == 0 ? <><span key={i}>{val[i]}</span></>:<span key={i}>{val[i]}&nbsp;/&nbsp;</span>))}
+                                                    <div key={x} className=" text-xs border-b-[0.5px] border-black">
+                                                        {[...Array(val.length)].map((_, i) => ((i + 1) % 4 == 0 ? <><span key={i}>{val[i]}</span></> : <span key={i}>{val[i]}&nbsp;/&nbsp;</span>))}
                                                     </div>
                                                 ))}
                                             </div>
@@ -118,44 +129,51 @@ const Semester = (props) => {
     return (
         <div className="mt-1 flex items-center justify-center bg-gray-100 p-2 mb-5">
             <div className="w-full p-4 bg-amber-300 border-t-4 border-l-4 border-amber-400 rounded-3xl shadow-xl shadow-amber-400 flex flex-col justify-normal overflow-x-scroll scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
-                <h2 className="text-xl font-bold mb-4">Semester wise Timetable</h2>
+                <h2 className="text-xl font-bold mb-4">Section wise Timetable</h2>
 
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select a Stream</label>
-                    <select onChange={(e) => setstval(e.target.value)} onClick={() => getdata("stream", "stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select onChange={(e) => setstval(e.target.value)} onClick={() => getdata("stream", "stream")} value = {stval} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         {stream1.map(st => <option key={st} value={st} >{st}</option>)}
                     </select>
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Select a Semester</label>
-                    <select onChange={(e) => setseval(e.target.value)} onClick={() => getdata("semester", `S${stval}`, "First select a stream")} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        {semester1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Select a department</label>
+                    <select onChange={(e) => setdpval(e.target.value)} onClick={() => getdata("department", stval, "First select a stream")} value = {dpval} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        {department1.map(ch => <option key={ch} value={ch} >{ch}</option>)}
+                    </select>
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Select a Section</label>
+                    <select onChange={(e) => { setsecval(e.target.value) }} onClick={() => getdata("section", dpval, "First select a Department")} value={secval} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        {section1.map(se => <option key={se} value={se} >{se}</option>)}
                     </select>
                 </div>
 
                 <button
-                    onClick={() => gettable("semester_table", [`S${stval}`,seval], "First select a semester")}
+                    onClick={() => gettable("section_table",secval, "First select a section")}
                     className=" self-center w-72 px-4 py-2 bg-blue-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
                 >
                     Get Table
                 </button>
                 {dptable && randertable()}
                 {dptable && (<><button
-                        onClick={normal}
-                        className=" self-center w-60 mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Back
-                    </button>
-                    <button
-                    onClick={exportTableToExcel}
+                    onClick={normal}
                     className=" self-center w-60 mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                 >
-                    Export to Excel
-                </button></>)}
+                    Back
+                </button>
+                    <button
+                        onClick={exportTableToExcel}
+                        className=" self-center w-60 mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Export to Excel
+                    </button></>)}
             </div>
         </div>
     )
 }
 
-export default Semester
+export default Section

@@ -56,7 +56,7 @@ const Days = (props) => {
                                         <div className="flex items-center whitespace-nowrap overflow-hidden text-xs min-w-60 w-auto">
                                           {[...Array(allvalues.length)].map((_, i) => (
                                             allvalues[i] !== "" ? (
-                                              (i + 1) % 5 === 0 ? (
+                                              (i + 1) % 6 === 0 ? (
                                                 <span key={i} className="inline-block">{allvalues[i]}</span>
                                               ) : (
                                                 <span key={i} className="inline-block">

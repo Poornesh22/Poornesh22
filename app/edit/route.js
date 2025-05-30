@@ -31,61 +31,175 @@ export async function PUT(request) {
         let collection4 = db.collection("department_table");
         let collection5 = db.collection("semester_table");
         let collection6 = db.collection("day_tables");
+        let collection7 = db.collection("section_table");
         const data1 = await collection.findOne({ name: data.name })
+        let str1 = data.name[2]
+        let match1 = str1.match(/\d+$/)
         for (let day in data1) {
             if (day != "name" && day != "database" && day != "_id") {
                 for (let i = 0; i < data1[day].length; i++) {
                     if (data1[day][i][0] != data[day][i][0] || data1[day][i][1] != data[day][i][1] || data1[day][i][2] != data[day][i][2]) {
-                        if ((data[day][i][0] == "" && data[day][i][1] == " " && data[day][i][2] == " " ) || (data[day][i][0] != "" && data[day][i][1] != "" && data[day][i][1] != " " && data[day][i][2] != "" && data[day][i][2] != " ")) {
-                            console.log(data[day][i])
+                        if ((data[day][i][0] == "" && data[day][i][1] == " " && data[day][i][2] == " ") || (data[day][i][0] != "" && data[day][i][1] != "" && data[day][i][1] != " " && data[day][i][2] != "" && data[day][i][2] != " ")) {
 
                             await collection.updateOne({ name: data.name }, { $set: { [`${day}.${i}`]: [data[day][i][0], data[day][i][1], data[day][i][2]] } })
                             if (data1[day][i][0] != "" && data[day][i][0] == "") {
-                                await collection4.updateOne({ name: data1.name[1] }, { $pull: { [`${day}.${i}`]: [data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
-                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $pull: { [`${day}.${i}`]: [data1.name[1], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
-                                await collection.updateOne({ name: data1.name[0] }, { $pull: { [`${day}.${i}`]: [data1.name[1], data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
-                                await collection6.updateOne({ name: day }, { $set: { [`${data1[day][i][2]}.${i}`]: ["", "", "", "", ""] } })
+                                await collection4.updateOne({ name: data1.name[1] }, { $pull: { [`${day}.${i}`]: [data1.name[2], data1.name[3], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection7.updateOne({ name: data1.name[3] }, { $pull: { [`${day}.${i}`]: [data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $pull: { [`${day}.${i}`]: [data1.name[1], data1.name[3], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection.updateOne({ name: data1.name[0] }, { $pull: { [`${day}.${i}`]: [data1.name[1], data1.name[2], data1.name[3], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection6.updateOne({ name: day }, { $set: { [`${data1[day][i][2]}.${i}`]: ["", "", "", "", "", ""] } })
                             } else if (data1[day][i][0] == "" && data[day][i][0] != "") {
-                                await collection4.updateOne({ name: data.name[1] }, { $push: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $push: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                                await collection.updateOne({ name: data.name[0] }, { $push: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                                await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: [data.name[0], data.name[1], data.name[2], data[day][i][0], data[day][i][1]] } })
+                                await collection4.updateOne({ name: data.name[1] }, { $push: { [`${day}.${i}`]: [data.name[2], data.name[3], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection7.updateOne({ name: data.name[3] }, { $push: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $push: { [`${day}.${i}`]: [data.name[1], data.name[3], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection.updateOne({ name: data.name[0] }, { $push: { [`${day}.${i}`]: [data.name[1], data.name[2], data.name[3], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: [data.name[0], data.name[1], data.name[2], data.name[3], data[day][i][0], data[day][i][1]] } })
                             } else if (data1[day][i][0] != data[day][i][0] || data1[day][i][1] != data[day][i][1] || data1[day][i][2] != data[day][i][2]) {
-                                await collection4.updateOne({ name: data1.name[1] }, { $pull: { [`${day}.${i}`]: [data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
-                                await collection4.updateOne({ name: data.name[1] }, { $push: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
-                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]], [`${day}.${i}`]: [data1.name[1], data1[day][i][0], data1[day][i][1], data1[day][i][2]] }, { $set: { [`${day}.${i}`]: [data.name[1], data[day][i][0], data[day][i][1], data[day][i][2]] } }, {returnDocument : 'after'})
-                                await collection.findOneAndUpdate({ name: data1.name[0],  [`${day}.${i}`]: [data1.name[1], data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]]  }, { $set : {  [`${day}.${i}.$`]: [data.name[1], data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } },{returnDocument : 'after'})
-                                await collection6.updateOne({ name: day }, { $set: { [`${data1[day][i][2]}.${i}`]: ["", "", "", "", ""] } })
-                                await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: [data.name[0], data.name[1], data.name[2], data[day][i][0], data[day][i][1]] } })
+                                await collection4.updateOne({ name: data1.name[1] }, { $pull: { [`${day}.${i}`]: [data1.name[2], data1.name[3], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection4.updateOne({ name: data.name[1] }, { $push: { [`${day}.${i}`]: [data.name[2], data.name[3], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $pull: { [`${day}.${i}`]: [data1.name[1],data1.name[3], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection5.updateOne({ name: [`S${data.name[0]}`, data.name[2]] }, { $push: { [`${day}.${i}`]: [data.name[1], data.name[3], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection.updateOne({ name: data1.name[0] }, { $pull: { [`${day}.${i}`]: [data1.name[1],data1.name[2],data1.name[3], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection.updateOne({ name: data.name[0] }, { $push: { [`${day}.${i}`]: [data.name[1], data.name[2], data.name[3], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection6.updateOne({ name: day }, { $set: { [`${data1[day][i][2]}.${i}`]: ["", "", "", "", "", ""] } })
+                                await collection6.updateOne({ name: day }, { $set: { [`${data[day][i][2]}.${i}`]: [data.name[0], data.name[1], data.name[2], data.name[3], data[day][i][0], data[day][i][1]] } })
+                                await collection7.updateOne({ name: data1.name[3] }, { $pull: { [`${day}.${i}`]: [data1.name[2], data1[day][i][0], data1[day][i][1], data1[day][i][2]] } })
+                                await collection7.updateOne({ name: data.name[3] }, { $push: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][1], data[day][i][2]] } })
+                                await collection1.updateOne({ name: data1[day][i][2] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
+                                await collection1.updateOne({ name: data[day][i][2] }, { $set: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][1]] } })
                             }
 
                             if (data1[day][i][1] != data[day][i][1]) {
                                 if (data1[day][i][1] != "" && data[day][i][1] == "") {
-                                    await collection2.updateOne({ name: data1[day][i][1] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
-                                    await collection2.updateOne({ name: "records" }, { $pull: { [`${day}.${i}`]: data1[day][i][1] } })
+                                    let c = 0
+                                    let x1 = data1[day][i][1]
+                                    let x2 = x1.split("+")
+                                    for (let j = 0; j < x1.length; j++) {
+                                        if (x1[j] == "+") {
+                                            c += 1
+                                        }
+                                    }
+                                    for (let k = 0; k <= c; k++) {
+                                        x2[k] = x2[k].trim()
+                                        await collection2.updateOne({ name: x2[k] }, { $set: { [`${day}.${i}`]: ["", "", "", "", "", ""] } })
+                                        if (parseInt(match1[0]) % 2 == 0) {
+                                            await collection2.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: x2[k] } })
+                                        } else {
+                                            if (parseInt(match1[0]) === 11) {
+                                                await collection2.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: x2[k] } })
+                                            } else {
+                                                await collection2.updateOne({ name: "odd_records" }, { $pull: { [`${day}.${i}`]: x2[k] } })
+                                            }
+                                        }
+                                    }
                                 } else if (data1[day][i][1] == "" && data[day][i][1] != "") {
-                                    await collection2.updateOne({ name: data[day][i][1] }, { $set: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][2]] } })
-                                    await collection2.updateOne({ name: "records" }, { $push: { [`${day}.${i}`]: data[day][i][1] } })
+                                    let c = 0
+                                    let x1 = data[day][i][1]
+                                    let x2 = x1.split("+")
+                                    for (let j = 0; j < x1.length; j++) {
+                                        if (x1[j] == "+") {
+                                            c += 1
+                                        }
+                                    }
+                                    for (let k = 0; k <= c; k++) {
+                                        x2[k] = x2[k].trim()
+                                        await collection2.updateOne({ name: x2[k] }, { $set: { [`${day}.${i}`]: [data.name[0], data.name[1], data.name[2], data.name[3], data[day][i][0], data[day][i][2]] } })
+                                        if (parseInt(match1[0]) % 2 === 0) {
+                                            await collection2.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: x2[k] } })
+                                        } else {
+                                            if (parseInt(match1[0]) === 11) {
+                                                await collection2.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: x2[k] } })
+                                            } else {
+                                                await collection2.updateOne({ name: "odd_records" }, { $push: { [`${day}.${i}`]: x2[k] } })
+                                            }
+                                        }
+                                    }
                                 } else {
-                                    await collection2.updateOne({ name: data1[day][i][1] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
-                                    await collection2.updateOne({ name: data[day][i][1] }, { $set: { [`${day}.${i}`]: [data.name[2], data[day][i][0], data[day][i][2]] } })
-                                    await collection2.updateOne({ name: "records" }, { $pull: { [`${day}.${i}`]: data1[day][i][1] } })
-                                    await collection2.updateOne({ name: "records" }, { $push: { [`${day}.${i}`]: data[day][i][1] } })
+                                    let c = 0
+                                    let x1 = data1[day][i][1]
+                                    let x2 = x1.split("+")
+                                    for (let j = 0; j < x1.length; j++) {
+                                        if (x1[j] == "+") {
+                                            c += 1
+                                        }
+                                    }
+                                    for (let k = 0; k <= c; k++) {
+                                        x2[k] = x2[k].trim()
+                                        await collection2.updateOne({ name: x2[k] }, { $set: { [`${day}.${i}`]: ["", "", "", "", "", ""] } })
+                                        if (parseInt(match1[0]) % 2 === 0) {
+                                            await collection2.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: x2[k] } })
+                                        } else {
+                                            if (parseInt(match1[0]) === 11) {
+                                                await collection2.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: x2[k] } })
+                                            } else {
+                                                await collection2.updateOne({ name: "odd_records" }, { $pull: { [`${day}.${i}`]: x2[k] } })
+                                            }
+                                        }
+                                    }
+                                    let c1 = 0
+                                    let x11 = data[day][i][1]
+                                    let x22 = x11.split("+")
+                                    for (let j = 0; j < x11.length; j++) {
+                                        console.log(x11[j])
+                                        if (x11[j] == "+") {
+                                            c1 += 1
+                                        }
+                                    }
+                                    for (let k = 0; k <= c1; k++) {
+                                        x22[k] = x22[k].trim()
+                                        await collection2.updateOne({ name: x22[k] }, { $set: { [`${day}.${i}`]: [data.name[0], data.name[1], data.name[2], data.name[3], data[day][i][0], data[day][i][2]] } })
+                                        if (parseInt(match1[0]) % 2 === 0) {
+                                            await collection2.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: x22[k] } })
+                                        } else {
+                                            if (parseInt(match1[0]) === 11) {
+                                                await collection2.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: x22[k] } })
+                                            } else {
+                                                await collection2.updateOne({ name: "odd_records" }, { $push: { [`${day}.${i}`]: x22[k] } })
+                                            }
+                                        }
+                                    }
+
                                 }
                             }
 
                             if (data1[day][i][2] != data[day][i][2]) {
                                 if (data1[day][i][2] != "" && data[day][i][2] == "") {
                                     await collection1.updateOne({ name: data1[day][i][2] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
-                                    await collection3.updateOne({ name: "records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
+                                    if (parseInt(match1[0]) % 2 === 0) {
+                                        await collection3.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
+                                    } else {
+                                        if (parseInt(match1[0]) === 11) {
+                                            await collection3.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
+                                        } else {
+                                            await collection3.updateOne({ name: "odd_records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
+                                        }
+                                    }
                                 } else if (data1[day][i][2] == "" && data[day][i][2] != "") {
                                     await collection1.updateOne({ name: data[day][i][2] }, { $set: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][1]] } })
-                                    await collection3.updateOne({ name: "records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                    if (parseInt(match1[0]) % 2 === 0) {
+                                        await collection3.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                    } else {
+                                        if (parseInt(match1[0]) === 11) {
+                                            await collection3.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                        } else {
+                                            await collection3.updateOne({ name: "odd_records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                        }
+                                    }
                                 } else {
                                     await collection1.updateOne({ name: data1[day][i][2] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
                                     await collection1.updateOne({ name: data[day][i][2] }, { $set: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][1]] } })
-                                    await collection3.updateOne({ name: "records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
-                                    await collection3.updateOne({ name: "records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                    if (parseInt(match1[0]) % 2 === 0) {
+                                        await collection3.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
+                                        await collection3.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                    } else {
+                                        if (parseInt(match1[0]) === 11) {
+                                            await collection3.updateOne({ name: "even_records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
+                                            await collection3.updateOne({ name: "even_records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                        } else {
+                                            await collection3.updateOne({ name: "odd_records" }, { $pull: { [`${day}.${i}`]: data1[day][i][2] } })
+                                            await collection3.updateOne({ name: "odd_records" }, { $push: { [`${day}.${i}`]: data[day][i][2] } })
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -93,7 +207,7 @@ export async function PUT(request) {
                 }
             }
         }
-        return NextResponse.json({values : "Edited Successfully"});
+        return NextResponse.json({ values: "Edited Successfully" });
     } catch {
         return NextResponse.json({ values: ["Something went wrong Connection failed"] })
     }

@@ -3,12 +3,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Page = () => {
     const router = useRouter();
     const [type, settype] = useState("password");
+    const [show1, setshow1] = useState(true);
+    const [first, setfirst] = useState()
+    
 
     const {
         register,
@@ -19,6 +22,20 @@ const Page = () => {
         formState: { errors, isSubmitting },
     } = useForm();
 
+    useEffect(() => {
+        const func1 = async() =>{
+          let a = await fetch("/check" , {method : "DELETE",header : {"content-type" : "application/json"}})
+          let res = await a.json();
+          if(res.value == "1"){
+              setshow1(false);
+          } else {
+            setshow1(true);
+          }
+        }
+  
+        func1();
+      }, [])
+
     const Show = (e) => {
         if (type == "password") {
             settype("text")
@@ -27,7 +44,6 @@ const Page = () => {
         }
     }
 
-    
     const onSubmit = async (data) => {
         data.username = data.username.trim();
         let a = await fetch("/server", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
@@ -79,10 +95,10 @@ const Page = () => {
                     </div>
                 </form>
 
-                <p className="mt-10 text-center text-sm text-gray-500">
+                {show1 && (<p className="mt-10 text-center text-sm text-gray-500">
                     First Time Visit?
                     <Link href="/createnew" className="font-semibold leading-6 text-indigo-600 hover:text-blue-700 hover:underline text-base">Create New Account</Link>
-                </p>
+                </p>)}
             </div>
         </div>
     )

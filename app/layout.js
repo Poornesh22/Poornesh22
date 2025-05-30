@@ -24,8 +24,8 @@ export default function RootLayout({ children }) {
         {children}
         <footer className="bg-cyan-950 fixed w-full bottom-0 text-white shadow-inner shadow-black">
           <ul className="flex justify-around p-1 text-[10px] sm:text-base font-serif">
-            <li>Copyright &copy; Poornesh Mishra</li>
-            <li> poorneshmishra10@gmail.com</li>
+            <li>Hislop College, Nagpur</li>
+            <li> principal@hislopcollege.ac.in</li>
           </ul>
         </footer>
       </body>

@@ -9,12 +9,14 @@ const Edit = (props) => {
     const [value1, setvalue1] = useState("");
     const [value2, setvalue2] = useState("");
     const [value3, setvalue3] = useState("");
+    const [value4, setvalue4] = useState("");
     const [department1, setdepartment1] = useState([""]);
     const [subject1, setsubject1] = useState([""]);
     const [stream1, setstream1] = useState([""]);
     const [semester1, setsemester1] = useState([""]);
     const [teacher1, setteacher1] = useState([""]);
     const [room1, setroom1] = useState([""]);
+    const [section1, setsection1] = useState([""])
     const [roomd, setroomd] = useState([""]);
     const [teacherd, setteacherd] = useState([""]);
     const [table1, settable1] = useState("");
@@ -43,6 +45,12 @@ const Edit = (props) => {
                 } else {
                     setsemester1(res.values)
                 }
+            } else if (name1 == "section") {
+                if (res.values == "") {
+                    alert("No any semester found")
+                } else {
+                    setsection1(res.values)
+                }
             } else if (name1 == "department") {
                 if (res.values == "") {
                     alert("No any department found")
@@ -50,18 +58,18 @@ const Edit = (props) => {
                     const course_d = [...res.values].sort((a, b) => {
                         const isANumeric = !isNaN(a);
                         const isBNumeric = !isNaN(b);
-            
+
                         if (isANumeric && isBNumeric) {
-                          return parseInt(a) - parseInt(b);
+                            return parseInt(a) - parseInt(b);
                         }
-            
+
                         if (!isANumeric && !isBNumeric) {
-                          return a.localeCompare(b);
+                            return a.localeCompare(b);
                         }
                         if (isANumeric != "" || isANumeric != " ") {
-                          return isANumeric ? 1 : -1;
+                            return isANumeric ? 1 : -1;
                         }
-                      });
+                    });
                     setdepartment1(course_d)
                 }
             } else if (name1 == "subject") {
@@ -74,7 +82,22 @@ const Edit = (props) => {
                 if (res.values == "") {
                     alert("No any teacher name found")
                 } else {
-                    setteacher1(res.values)
+                    const course_d = [...res.values].sort((a, b) => {
+                        const isANumeric = !isNaN(a);
+                        const isBNumeric = !isNaN(b);
+
+                        if (isANumeric && isBNumeric) {
+                            return parseInt(a) - parseInt(b);
+                        }
+
+                        if (!isANumeric && !isBNumeric) {
+                            return a.localeCompare(b);
+                        }
+                        if (isANumeric != "" || isANumeric != " ") {
+                            return isANumeric ? 1 : -1;
+                        }
+                    });
+                    setteacher1(course_d)
                 }
             } else {
                 if (res.values == "") {
@@ -83,18 +106,18 @@ const Edit = (props) => {
                     const course_d = [...res.values].sort((a, b) => {
                         const isANumeric = !isNaN(a);
                         const isBNumeric = !isNaN(b);
-            
+
                         if (isANumeric && isBNumeric) {
-                          return parseInt(a) - parseInt(b);
+                            return parseInt(a) - parseInt(b);
                         }
-            
+
                         if (!isANumeric && !isBNumeric) {
-                          return a.localeCompare(b);
+                            return a.localeCompare(b);
                         }
                         if (isANumeric != "" || isANumeric != " ") {
-                          return isANumeric ? 1 : -1;
+                            return isANumeric ? 1 : -1;
                         }
-                      });
+                    });
                     setroom1(course_d)
                 }
             }
@@ -106,7 +129,7 @@ const Edit = (props) => {
     const testing1 = async () => {
         let data = {
             database: database,
-            name: [value1, value2, value3]
+            name: [value1, value2, value3, value4]
         };
         let a = await fetch("/edit", { method: "POST", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
         let b = await a.json();
@@ -132,23 +155,74 @@ const Edit = (props) => {
 
 
     const room_d = async () => {
-        let data = {
-            database: props.database,
-            name: "room",
-        };
-        let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
-        let res = await a.json();
-        setroomd(res);
+        let str1 = value3;
+        let match1 = str1.match(/\d+$/)
+        if (parseInt(match1[0]) % 2 === 0) {
+            let data = {
+                rec: "even",
+                database: props.database,
+                name: "room",
+            };
+            let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
+            let res = await a.json();
+            setroomd(res);
+        } else {
+            if (parseInt(match1[0]) === 11) {
+                let data = {
+                    rec: "even",
+                    database: props.database,
+                    name: "room",
+                };
+                let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
+                let res = await a.json();
+                setroomd(res);
+
+            } else {
+                let data = {
+                    rec: "odd",
+                    database: props.database,
+                    name: "room",
+                };
+                let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
+                let res = await a.json();
+                setroomd(res);
+            }
+        }
     };
 
     const teacher_d = async () => {
-        let data = {
-            database: props.database,
-            name: "teacher",
-        };
-        let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
-        let res = await a.json();
-        setteacherd(res);
+        let str1 = value3;
+        let match1 = str1.match(/\d+$/)
+        if (parseInt(match1[0]) % 2 === 0) {
+            let data = {
+                rec: "even",
+                database: props.database,
+                name: "teacher",
+            };
+            let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
+            let res = await a.json();
+            setteacherd(res);
+        } else {
+            if (parseInt(match1[0]) === 11) {
+                let data = {
+                    rec: "even",
+                    database: props.database,
+                    name: "teacher",
+                };
+                let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
+                let res = await a.json();
+                setteacherd(res);
+            } else {
+                let data = {
+                    rec: "odd",
+                    database: props.database,
+                    name: "teacher",
+                };
+                let a = await fetch("/t_values", { method: "POST", headers: { "contect-type": "application/json" }, body: JSON.stringify(data) })
+                let res = await a.json();
+                setteacherd(res);
+            }
+        }
     };
 
 
@@ -159,11 +233,13 @@ const Edit = (props) => {
             alert("Please select a department");
         } else if (value3 == "") {
             alert("Please select a Semester")
+        } else if (value4 == "") {
+            alert("please select a section");
         } else {
             { testing1() };
-            { getdata("teacher", value2) };
+            { getdata("teacher", "teacher") };
             { getdata("room", "room") };
-            { getdata("subject", value3) }
+            { getdata("subject", [`S${value1}`, value3]) }
             { room_d() };
             { teacher_d() };
         }
@@ -173,12 +249,12 @@ const Edit = (props) => {
         setvalue1("");
         setvalue2("");
         setvalue3("");
-    
+        setvalue4("");
+
         setTableVisible(false)
     };
 
     const Submit_table = async () => {
-        console.log(table1)
         let a = await fetch("/edit", { method: "PUT", header: { "content-type": "application/json" }, body: JSON.stringify(table1) })
         alert("Table Edited Successfully");
         setTableVisible(false);
@@ -212,7 +288,20 @@ const Edit = (props) => {
                                                     {subject1.map(sub => <option key={sub} value={sub} >{sub}</option>)}
                                                 </select>
                                                 <select onChange={(e) => testing(day, j, 1, e.target.value)} value={allvalues[1]} className="w-full px-2 py-1 border border-gray-300 rounded">
-                                                    {teacher1.filter((teacher) => teacher == allvalues[1] || !teacherd?.[day]?.[j]?.includes(teacher)).map(sub => <option key={sub} value={sub} >{sub}</option>)}
+                                                    {teacher1.filter((teacher) => {
+                                                        let c1 = 0
+                                                        let x2 = teacher.split("+")
+                                                        let c = x2.length - 1;
+                                                        for (let k = 0; k <= c; k++) {
+                                                            if (x2[k] != " ") {
+                                                                x2[k] = x2[k].trim();
+                                                            }
+                                                            if (teacherd?.[day]?.[j]?.includes(x2[k])) {
+                                                                c1 += 1
+                                                            }
+                                                        }
+                                                        return (c1 === 0 || teacher == allvalues[1])
+                                                    }).map(sub => <option key={sub} value={sub} >{sub}</option>)}
                                                 </select>
                                                 <select onChange={(e) => testing(day, j, 2, e.target.value)} value={allvalues[2]} className="w-full px-2 py-1 border border-gray-300 rounded">
                                                     {room1.filter((room) => room == allvalues[2] || !roomd?.[day]?.[j]?.includes(room)).map(sub => <option key={sub} value={sub}>{sub}</option>)}
@@ -256,6 +345,13 @@ const Edit = (props) => {
                         </select>
                     </div>
 
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Select a Section</label>
+                        <select onChange={(e) => { setvalue4(e.target.value) }} onClick={() => getdata("section", value2, "First select a Department")} value={value4} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            {section1.map(se => <option key={se} value={se} >{se}</option>)}
+                        </select>
+                    </div>
+
 
                     <button
                         onClick={handleCreateTable}
@@ -268,18 +364,18 @@ const Edit = (props) => {
 
                     {tableVisible && (
                         <>
-                        <button
-                          onClick={Submit_table}
-                          className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
-                        >
-                          Submit
-                        </button>
-                        <button
-                          onClick={normal}
-                          className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
-                        >
-                          Back
-                        </button>
+                            <button
+                                onClick={Submit_table}
+                                className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
+                            >
+                                Submit
+                            </button>
+                            <button
+                                onClick={normal}
+                                className=" self-center mt-4 w-72 px-4 py-2 bg-green-500 text-white font-semibold rounded-3xl shadow-3xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 "
+                            >
+                                Back
+                            </button>
                         </>
                     )}
                 </div>

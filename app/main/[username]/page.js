@@ -12,6 +12,7 @@ import Delete from "@/components/Delete";
 import Stream from "@/components/Stream";
 import Days from "@/components/Days";
 import All_tables from "@/components/All_tables";
+import Section from "@/components/Section";
 
 export default function Home({ params }) {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function Home({ params }) {
   const [subject1, setsubject1] = useState([""]);
   const [teacher1, setteacher1] = useState([""]);
   const [room1, setroom1] = useState([""]);
+  const [section1, setsection1] = useState([""]);
   const [stentry, setstentry] = useState("");
   const [stdel, setstdel] = useState("");
   const [dpentry, setdpentry] = useState("");
@@ -66,18 +68,24 @@ export default function Home({ params }) {
   const [s, sets] = useState(false);
   const [st, setst] = useState(false);
   const [da, setda] = useState(false);
+  const [sec, setsec] = useState(false);
   const [isstedit, setisstedit] = useState("");
   const [isseedit, setisseedit] = useState("");
   const [issuedit, setissuedit] = useState("");
   const [isdpedit, setisdpedit] = useState("");
   const [istredit, setistredit] = useState("");
   const [isredit, setisredit] = useState("");
+  const [secentry, setsecentry] = useState("");
+  const [secdel, setsecdel] = useState("");
+  const [esecentry, setesecentry] = useState("");
+  const [esecdel, setesecdel] = useState("");
 
 
 
 
 
   const putdata = async (name1, name, value, msg = "") => {
+    value = value.replace(/\s+/g, " ");
     value = value.trim();
     if (value == "" || value == " " || value == "  " || value == "   " || value == "    " || value == "     ") {
       alert("Please enter a value")
@@ -96,6 +104,7 @@ export default function Home({ params }) {
       setsuentry("");
       settrentry("");
       setdpentry("");
+      setsecentry("");
       let a = await fetch("/main", { method: "PUT", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
       let res = await a.json()
       alert(res.name)
@@ -153,6 +162,14 @@ export default function Home({ params }) {
           setrdel("");
           setsustdel("");
           setsstdel("");
+        }else if (name1 == "section"){
+          setsection1(res.values)
+          setcstdel("");
+          setdpdel("");
+          setsudel("");
+          settrdel("");
+          setrdel("");
+
         } else if (name1 == "semester") {
           setsemester1(res.values)
           setcstdel("");
@@ -170,7 +187,22 @@ export default function Home({ params }) {
           settrdel("");
           setrdel("");
         } else if (name1 == "teacher") {
-          setteacher1(res.values)
+          const course_d = [...res.values].sort((a, b) => {
+            const isANumeric = !isNaN(a);
+            const isBNumeric = !isNaN(b);
+
+            if (isANumeric && isBNumeric) {
+              return parseInt(a) - parseInt(b);
+            }
+
+            if (!isANumeric && !isBNumeric) {
+              return a.localeCompare(b);
+            }
+            if (isANumeric != "" || isANumeric != " ") {
+              return isANumeric ? 1 : -1;
+            }
+          });
+          setteacher1(course_d)
           setcsedel("");
           setsedel("");
           setsudel("");
@@ -264,6 +296,8 @@ export default function Home({ params }) {
       setesuentry("")
       setetrdel("")
       setetrentry("")
+      setesecentry("")
+      setesecdel("")
     }
   }
 
@@ -303,6 +337,9 @@ export default function Home({ params }) {
       settdpdel("");
       setsustdel("");
       setcstdel("");
+      setsecentry("");
+      setsecdel("");
+      setesecentry("");
     }
   };
 
@@ -392,7 +429,7 @@ export default function Home({ params }) {
                   onChange={(e) => {
                     setstentry(e.target.value)
                   }}
-                  className=" rounded-lg w-full mb:mt-5 px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className=" rounded-lg w-full md:mt-5 px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter a stream"
                 />
                 <button
@@ -403,7 +440,7 @@ export default function Home({ params }) {
                 </button>
               </div>
 
-              <div className=" rounded-lg mb-4 mb:mt-10">
+              <div className=" rounded-lg mb-4 md:mt-10">
                 <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2 sm:mb-4">
                   choose a stream to delete or edit
                 </label>
@@ -736,74 +773,34 @@ export default function Home({ params }) {
             </div>
 
 
-            <div className=" rounded-lg  self-center w-72 sm:w-96  p-6 bg-blue-200 shadow-lg hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
+            <div className=" rounded-lg  self-center w-72 sm:w-96  p-6 bg-blue-200 shadow-lg sm:h-[400px] lg:h-[400px] hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
               <h2 className=" rounded-lg text-2xl font-bold mb-4">Teachers</h2>
               <div className=" rounded-lg mb-4">
-
-                <div className=" rounded-lg flex gap-3">
-                  <div className=" rounded-lg mb-4">
-                    <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2">
-                      Select a <br className="sm:hidden" /> Stream
-                    </label>
-                    <select
-                      onClick={() => getdata("stream", "stream")}
-                      id="added-streams"
-                      value={tstdel}
-                      onChange={(e) => { settstdel(e.target.value) }}
-                      on
-                      className=" rounded-lg block w-28 sm:w-40 px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                      {stream1.map(stream => (<option key={stream} value={stream}>{stream}</option>))}
-                    </select>
-                  </div>
-
-                  <div className=" rounded-lg mb-4">
-                    <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2">
-                      Select a Department
-                    </label>
-                    <select
-                      onClick={() => getdata("department", tstdel, "First select a stream")}
-                      id="added-streams"
-                      value={tdpdel}
-                      onChange={(e) => { settdpdel(e.target.value) }}
-                      on
-                      className=" rounded-lg block w-28 sm:w-40 px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                      {department1.map(course => (<option key={course} value={course}>{course}</option>))}
-                    </select>
-                  </div>
-
-                </div>
 
                 <input
                   value={trentry}
                   onChange={(e) => {
                     settrentry(e.target.value)
                   }}
-                  onClick={() => {
-                    if (tdpdel == "") {
-                      alert("First select a Department")
-                    }
-                  }}
                   type="text"
-                  className=" rounded-lg w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className=" rounded-lg md:mt-5 w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter Teacher name"
                 />
                 <button
-                  onClick={() => putdata("teacher", tdpdel, trentry, "First select a department")}
+                  onClick={() => putdata("teacher", "teacher", trentry)}
                   className=" rounded-lg mt-2 w-full px-4 py-2 bg-blue-500 text-white font-semibold shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
                 >
                   Add
                 </button>
               </div>
 
-              <div className=" rounded-lg mb-4">
-                <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2">
+              <div className=" rounded-lg mb-4 md:mt-10">
+                <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2 sm:mb-4">
                   Choose a teacher name to delete or edit
                 </label>
                 <div className="flex gap-3">
                   <select
-                    onClick={() => getdata("teacher", tdpdel, "First select a department")}
+                    onClick={() => getdata("teacher", "teacher")}
                     id="added-teachers"
                     value={trdel}
                     onChange={(e) => { settrdel(e.target.value) }}
@@ -813,7 +810,7 @@ export default function Home({ params }) {
                   </select>
                   {!istredit ? (<select
                     value={esudel}
-                    onClick={() => getdata("teacher", tdpdel, "First select a department")}
+                    onClick={() => getdata("teacher", "teacher")}
                     id="select-subject"
                     onChange={(e) => { setetrdel(e.target.value); setetrentry(e.target.value); setistredit(true) }}
                     className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -830,13 +827,13 @@ export default function Home({ params }) {
               </div>
               <div className="flex gap-3">
                 <button
-                  onClick={() => deletedata("teacher", tdpdel, trdel)}
+                  onClick={() => deletedata("teacher","teacher", trdel)}
                   className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Delete
                 </button>
                 <button
-                  onClick={() => editdata("teacher", tdpdel, etrdel, etrentry)}
+                  onClick={() => editdata("teacher", "teacher", etrdel, etrentry)}
                   className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                 >
                   Edit
@@ -911,6 +908,115 @@ export default function Home({ params }) {
                 </button>
               </div>
             </div>
+
+
+            <div className=" rounded-lg self-center w-72 sm:w-96 p-6 bg-blue-200 shadow-lg hover:shadow-xl hover:shadow-blue-500 shadow-blue-600">
+              <h2 className=" rounded-lg text-2xl font-bold mb-4">Section</h2>
+              <div className=" rounded-lg mb-4">
+
+                <div className=" rounded-lg flex gap-3">
+                  <div className=" rounded-lg mb-4">
+                    <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2">
+                      Select a <br className="sm:hidden" />Stream
+                    </label>
+                    <select
+                      onClick={() => getdata("stream", "stream")}
+                      id="added-streams"
+                      value={tstdel}
+                      onChange={(e) => { settstdel(e.target.value) }}
+                      on
+                      className=" rounded-lg block w-28 sm:w-40 px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      {stream1.map(stream => (<option key={stream} value={stream}>{stream}</option>))}
+                    </select>
+                  </div>
+
+                  <div className=" rounded-lg mb-4">
+                    <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2">
+                      Select a Department
+                    </label>
+                    <select
+                      onClick={() => getdata("department", tstdel, "First select a stream")}
+                      id="added-streams"
+                      value={tdpdel}
+                      onChange={(e) => { settdpdel(e.target.value) }}
+                      on
+                      className=" rounded-lg block w-28 sm:w-40 px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      {department1.map(dp => <option key={dp} value={dp}>{dp}</option>)}
+                    </select>
+                  </div>
+
+                </div>
+
+                <input
+                  onClick={() => {
+                    if (tdpdel == "") {
+                      alert("First select a department")
+                    }
+                  }}
+                  value={secentry}
+                  onChange={(e) => {
+                    setsecentry(e.target.value)
+                  }}
+                  type="text"
+                  className=" rounded-lg w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter section name"
+                />
+                <button
+                  onClick={() => putdata("section", tdpdel, secentry, "First select a Department")}
+                  className=" rounded-lg mt-2 w-full px-4 py-2 bg-blue-500 text-white font-semibold shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                >
+                  Add
+                </button>
+              </div>
+
+              <div className=" rounded-lg mb-4">
+                <label htmlFor="added-streams" className=" rounded-lg block text-sm font-medium text-gray-700 mb-2">
+                  Choose a section to delete or edit
+                </label>
+                <div className="flex gap-3">
+                  <select
+                    onClick={() => getdata("section", tdpdel, "First select a Department")}
+                    id="added-subjects"
+                    value={secdel}
+                    onChange={(e) => setsecdel(e.target.value)}
+                    className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {section1.map(section => (<option key={section} value={section}>{section}</option>))}
+                  </select>
+                  {!issuedit ? (<select
+                    value={esecdel}
+                    onClick={() => getdata("section", tdpdel, "First select a semester")}
+                    id="select-subject"
+                    onChange={(e) => { setesecdel(e.target.value); setesecentry(e.target.value); setissuedit(true) }}
+                    className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {section1.map(section => (<option key={section} value={section}>{section}</option>))}
+                  </select>) : (<input
+                    value={esecentry}
+                    id="modify-subject"
+                    onChange={(e) => { setesecentry(e.target.value) }}
+                    className=" rounded-lg block w-full px-3 py-2 bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => deletedata("section", tdpdel, secdel)}
+                  className=" rounded-lg w-full px-4 py-2 bg-red-700 text-white font-semibold shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => editdata("section", tdpdel, esecdel, esecentry)}
+                  className=" rounded-lg w-full px-4 py-2 bg-green-600 text-white font-semibold shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
           </div >
         </div>
         {newtable && <Table scroll={scroll} database={database} />}
@@ -918,12 +1024,13 @@ export default function Home({ params }) {
         {viewtable && (<><div className=' rounded-lg bg-amber-400 w-full mb-5 sm:mb-7 flex flex-col gap-5 p-5 text-center h-auto'>
           <h2 className=" rounded-lg font-mono text-black font-bold text-xl [text-shadow:2px_1px_4px_rgba(0,0,0,0.5)]">Click a view point</h2>
           <div className=" rounded-lg flex flex-wrap gap-10 sm:gap-20 md:gap-20 justify-center h-auto">
-            <button onClick={() => { setda(false), setst(false); sets(false); setr(false); sett(false); setd(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-[11px] sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white" >Department</button>
-            <button onClick={() => { setda(false), setst(false); sets(false); setd(false); sett(false); setr(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Room</button>
-            <button onClick={() => { setda(false), setst(false); sets(false); setr(false); setd(false); sett(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Teacher</button>
-            <button onClick={() => { setda(false), setst(false); sett(false); setr(false); setd(false); sets(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Semester</button>
-            <button onClick={() => { setda(false), sett(false); setr(false); setd(false); sets(false); setst(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Stream</button>
-            <button onClick={() => { setst(false), sett(false); setr(false); setd(false); sets(false); setda(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Days</button>
+            <button onClick={() => {setsec(false); setda(false); setst(false); sets(false); setr(false); sett(false); setd(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-[11px] sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white" >Department</button>
+            <button onClick={() => { setsec(false); setda(false); setst(false); sets(false); setd(false); sett(false); setr(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Room</button>
+            <button onClick={() => { setsec(false); setda(false); setst(false); sets(false); setr(false); setd(false); sett(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Teacher</button>
+            <button onClick={() => { setsec(false); setda(false); setst(false); sett(false); setr(false); setd(false); sets(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Semester</button>
+            <button onClick={() => { setsec(false); setda(false); sett(false); setr(false); setd(false); sets(false); setst(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Stream</button>
+            <button onClick={() => { setsec(false); setst(false); sett(false); setr(false); setd(false); sets(false); setda(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Days</button>
+            <button onClick={() => { setda(false); setst(false); sett(false); setr(false); setd(false); sets(false); setsec(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Section</button> 
           </div>
         </div> <div className=" rounded-lg mb-5">
             {d && <Department scroll={scroll} database={database} />}
@@ -932,6 +1039,7 @@ export default function Home({ params }) {
             {s && <Semester scroll={scroll} database={database} />}
             {st && <Stream scroll={scroll} database={database} />}
             {da && <Days scroll={scroll} database={database} />}
+            {sec && <Section scroll = {scroll} database = {database} />}
           </div>
         </>)}
         {deletetable && <Delete scroll={scroll} database={database} />}

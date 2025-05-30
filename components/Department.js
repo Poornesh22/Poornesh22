@@ -104,7 +104,7 @@ const Department = (props) => {
                                             <div className="flex flex-col min-w-44 w-auto min-h-20 text-xs">
                                                 {allvalues.map((val, x) => (
                                                     <div key={x} className=" whitespace-nowrap text-xs border-b-[0.5px] border-black">
-                                                        {[...Array(val.length)].map((_, i) => ((i+1) % 4 == 0 ? <><span key={i}>{val[i]}</span></>:<span key={i}>{val[i]}/</span>))}
+                                                        {[...Array(val.length)].map((_, i) => ((i+1) % 5 == 0 ? <><span key={i}>{val[i]}</span></>:<span key={i}>{val[i]}&nbsp;/&nbsp;</span>))}
                                                     </div>
                                                 ))}
                                             </div>
