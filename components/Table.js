@@ -318,6 +318,7 @@ const Table = (props) => {
       updatedState.name = [value1, value2, value3, value4];
       return updatedState;
     });
+    console.log(table1);
 
     let a = await fetch("/t_values", { method: "PUT", header: { "content-type": "application/json" }, body: JSON.stringify(table1) })
     let res = await a.json();
@@ -447,7 +448,7 @@ const Table = (props) => {
                             }).map(sub => <option key={sub} value={sub} >{sub}</option>)}
                           </select>
                           <select onChange={(e) => testing(day, j, 2, e.target.value)} value={allvalues[2]} onClick={() => { getdata("room", "room", "select a room number", "clg_data") }} className="w-full px-2 py-1 border border-gray-300 rounded">
-                            {room1.filter((room) => room == allvalues[2] || !roomd?.[day]?.[j]?.includes(room)).map(sub => <option key={sub} value={sub}>{sub}</option>)}
+                            {room1.filter((room) => room == allvalues[2] || !roomd?.[day]?.[j]?.includes(room) || " ").map(sub => <option key={sub} value={sub}>{sub}</option>)}
                           </select>
                         </div>
                       </td>
@@ -496,12 +497,12 @@ const Table = (props) => {
             </select>
           </div>
 
-          <div className="mb-4">
+          {props.database != 'rupa79hislopjrcollege' ? <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Copy another table (Optional)</label>
             <select onChange={(e) => { check(e) }} onClick={() => getdata("Table", "record", "First select a collection", "Tables")} value={value5} className="w-full px-3 py-2 border border-gray-300 rounded-3xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {table12.map((se, i) => <option key={i} value={se} >[{se[0]}, {se[1]}, {se[2]}, {se[3]}]</option>)}
             </select>
-          </div>
+          </div>:<></>}
 
           {columnshow && (<div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Number of Columns</label>

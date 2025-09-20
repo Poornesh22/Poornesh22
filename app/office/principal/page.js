@@ -31,67 +31,91 @@ const Page = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        data.username = data.username.trim()
-        let data1 = {
-            m : "a",
-            n : "b",
-            o : "c",
-            p : "d",
-            q : "e",
-            r : "f",
-            s : "g",
-            t : "h",
-            u : "i",
-            v : "j",
-            w : "k",
-            x : "l",
-            y : "m",
-            z : "n",
-            1 : "o",
-            2 : "p",
-            3 : "q",
-            4 : "r",
-            5 : "s",
-            6 : "t",
-            7 : "u",
-            8 : "v",
-            9 : "w",
-            A : "x",
-            B : "y",
-            C : "z",
-            D : "1",
-            E : "2",
-            F : "3",
-            G : "4",
-            H : "5",
-            I : "6",
-            J : "7",
-            K : "8",
-            L : "9",
-            M : "0",
-        }
-        let c = Array.from(data.username);
-        data.username = ""
-        c.forEach((element) => {
-            data.username = data.username + data1[element]
-        })
-
-        let a = await fetch("/server", { method: "DELETE", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
-        let res = await a.json();
-        if (res.name == "login successful") {
-            setIsOpen(true);
-            setdatabase(data.username);
+        if (data.username == "HislopJr") {
+            data.username = "rupa79hislopjrcollege"
+            let a = await fetch("/server", { method: "DELETE", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
+            let res = await a.json();
+            if (res.name == "login successful") {
+                setIsOpen(true);
+                setdatabase(data.username);
+            } else {
+                alert("Key is not correct");
+                setValue("username", "")
+            }
+        } else if (data.username == "HislopSr") {
+            data.username = "rupa79hislopsrcollege"
+            let a = await fetch("/server", { method: "DELETE", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
+            let res = await a.json();
+            if (res.name == "login successful") {
+                setIsOpen(true);
+                setdatabase(data.username);
+            } else {
+                alert("Key is not correct");
+                setValue("username", "")
+            }
         } else {
-            alert("Key is not correct");
-            setValue("username", "")
+            data.username = data.username.trim()
+            let data1 = {
+                m: "a",
+                n: "b",
+                o: "c",
+                p: "d",
+                q: "e",
+                r: "f",
+                s: "g",
+                t: "h",
+                u: "i",
+                v: "j",
+                w: "k",
+                x: "l",
+                y: "m",
+                z: "n",
+                1: "o",
+                2: "p",
+                3: "q",
+                4: "r",
+                5: "s",
+                6: "t",
+                7: "u",
+                8: "v",
+                9: "w",
+                A: "x",
+                B: "y",
+                C: "z",
+                D: "1",
+                E: "2",
+                F: "3",
+                G: "4",
+                H: "5",
+                I: "6",
+                J: "7",
+                K: "8",
+                L: "9",
+                M: "0",
+            }
+            let c = Array.from(data.username);
+            data.username = ""
+            c.forEach((element) => {
+                data.username = data.username + data1[element]
+            })
+
+            let a = await fetch("/server", { method: "DELETE", header: { "content-type": "application/json" }, body: JSON.stringify(data) })
+            let res = await a.json();
+            if (res.name == "login successful") {
+                setIsOpen(true);
+                setdatabase(data.username);
+            } else {
+                alert("Key is not correct");
+                setValue("username", "")
+            }
         }
     }
 
     const scroll = () => {
         setTimeout(() => {
-          window.scrollBy({ top: 15000, behavior: "smooth" })
+            window.scrollBy({ top: 15000, behavior: "smooth" })
         }, 200);
-      }
+    }
 
     return (
         <div>
@@ -108,26 +132,26 @@ const Page = () => {
                 </div>
             </form>
             {isOpen && (<><div className=' rounded-lg bg-amber-400 w-full mb-5 sm:mb-7 flex flex-col gap-5 p-5 text-center h-auto'>
-          <h2 className=" rounded-lg font-mono text-black font-bold text-xl [text-shadow:2px_1px_4px_rgba(0,0,0,0.5)]">Click a view point</h2>
-          <div className=" rounded-lg flex flex-wrap gap-10 sm:gap-20 md:gap-20 justify-center h-auto">
-            <button onClick={() => { setsec(false); setda(false), setst(false); sets(false); setr(false); sett(false); setd(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-[11px] sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white" >Department</button>
-            <button onClick={() => { setsec(false); setda(false), setst(false); sets(false); setd(false); sett(false); setr(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Room</button>
-            <button onClick={() => { setsec(false); setda(false), setst(false); sets(false); setr(false); setd(false); sett(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Teacher</button>
-            <button onClick={() => { setsec(false); setda(false), setst(false); sett(false); setr(false); setd(false); sets(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Semester</button>
-            <button onClick={() => { setsec(false); setda(false), sett(false); setr(false); setd(false); sets(false); setst(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Stream</button>
-            <button onClick={() => { setsec(false); setst(false), sett(false); setr(false); setd(false); sets(false); setda(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Days</button>
-            <button onClick={() => { setda(false); setst(false); sett(false); setr(false); setd(false); sets(false); setsec(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Section</button> 
-          </div>
-        </div> <div className=" rounded-lg mb-5">
-            {d && <Department scroll={scroll} database={database} />}
-            {r && <Room scroll={scroll} database={database} />}
-            {t && <Teacher scroll={scroll} database={database} />}
-            {s && <Semester scroll={scroll} database={database} />}
-            {st && <Stream scroll={scroll} database={database} />}
-            {da && <Days scroll={scroll} database={database} />}
-            {sec && <Section scroll = {scroll} database = {database} />}
-          </div>
-        </>)}
+                <h2 className=" rounded-lg font-mono text-black font-bold text-xl [text-shadow:2px_1px_4px_rgba(0,0,0,0.5)]">Click a view point</h2>
+                <div className=" rounded-lg flex flex-wrap gap-10 sm:gap-20 md:gap-20 justify-center h-auto">
+                    <button onClick={() => { setsec(false); setda(false), setst(false); sets(false); setr(false); sett(false); setd(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-[11px] sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white" >Department</button>
+                    <button onClick={() => { setsec(false); setda(false), setst(false); sets(false); setd(false); sett(false); setr(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Room</button>
+                    <button onClick={() => { setsec(false); setda(false), setst(false); sets(false); setr(false); setd(false); sett(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Teacher</button>
+                    <button onClick={() => { setsec(false); setda(false), setst(false); sett(false); setr(false); setd(false); sets(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Semester</button>
+                    <button onClick={() => { setsec(false); setda(false), sett(false); setr(false); setd(false); sets(false); setst(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Stream</button>
+                    <button onClick={() => { setsec(false); setst(false), sett(false); setr(false); setd(false); sets(false); setda(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Days</button>
+                    <button onClick={() => { setda(false); setst(false); sett(false); setr(false); setd(false); sets(false); setsec(true); scroll() }} className="rounded-full border-2 w-20 sm:w-32 border-amber-500 p-2 shadow-xl shadow-green-800 active:shadow-inner active:shadow-black active:bg-amber-800 active:text-white bg-amber-600 text-xs sm:text-lg sm:p-3 sml text-gray-800 hover:shadow-blue-600 hover:bg-amber-700 hover:text-white">Section</button>
+                </div>
+            </div> <div className=" rounded-lg mb-5">
+                    {d && <Department scroll={scroll} database={database} />}
+                    {r && <Room scroll={scroll} database={database} />}
+                    {t && <Teacher scroll={scroll} database={database} />}
+                    {s && <Semester scroll={scroll} database={database} />}
+                    {st && <Stream scroll={scroll} database={database} />}
+                    {da && <Days scroll={scroll} database={database} />}
+                    {sec && <Section scroll={scroll} database={database} />}
+                </div>
+            </>)}
         </div>
     )
 }

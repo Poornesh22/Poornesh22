@@ -184,9 +184,18 @@ export async function PUT(request) {
                                     await collection.findOneAndUpdate({ name: x2.name[0], [day]: { $elemMatch: { $elemMatch: { 0: data.orgvalue } } } }, { $set: { [`${day}.$[].$[inner].0`]: data.modvalue } }, { arrayFilters: [{ "inner.0": data.orgvalue }], returnDocument: 'after' })
 
                                     await collection6.findOneAndUpdate({ name: day, [`${x2[day][j][2]}`]: { $elemMatch: { 1: data.orgvalue } } }, { $set: { [`${x2[day][j][2]}.$[elem].1`]: data.modvalue } }, { arrayFilters: [{ "elem.1": data.orgvalue }], returnDocument: 'after' })
-
-                                    await collection2.findOneAndUpdate({ name: x2[day][j][1], [day]: { $elemMatch: { 1: data.orgvalue } } }, { $set: { [`${day}.$[elem].1`]: data.modvalue } }, { arrayFilters: [{ "elem.1": data.orgvalue }], returnDocument: 'after' })
-
+                                    let c1 = 0
+                                    let t1 = x2[day][j][1]
+                                    let t2 = t1.split("+")
+                                    for (let k = 0; k < t1.length; k++) {
+                                        if (t1[k] == "+") {
+                                            c1 += 1;
+                                        }
+                                    }
+                                    for (let l = 0; l <= c1; l++) {
+                                        t2[l] = t2[l].trim();
+                                        await collection2.findOneAndUpdate({ name: t2[l], [day]: { $elemMatch: { 1: data.orgvalue } } }, { $set: { [`${day}.$[elem].1`]: data.modvalue } }, { arrayFilters: [{ "elem.1": data.orgvalue }], returnDocument: 'after' })
+                                    }
                                 }
                             }
                         }

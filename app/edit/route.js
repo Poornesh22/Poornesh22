@@ -186,6 +186,7 @@ export async function PUT(request) {
                                         }
                                     }
                                 } else {
+                                    data[day][i][2] = data[day][i][2].trim()
                                     await collection1.updateOne({ name: data1[day][i][2] }, { $set: { [`${day}.${i}`]: ["", "", ""] } })
                                     await collection1.updateOne({ name: data[day][i][2] }, { $set: { [`${day}.${i}`]: [data.name[1], data.name[2], data[day][i][1]] } })
                                     if (parseInt(match1[0]) % 2 === 0) {

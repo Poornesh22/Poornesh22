@@ -1,7 +1,8 @@
 "use client"
 import React, { useState } from 'react'
 import * as XLSX from 'xlsx';
-
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const Department = (props) => {
     var database = props.database;
@@ -18,6 +19,309 @@ const Department = (props) => {
         const table = document.getElementById('table-to-excel');
         const workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet 1" });
         XLSX.writeFile(workbook, 'Department_table.xlsx');
+    };
+
+    // Standard PDF Export Function for Department
+    const exportTableToPDF = () => {
+        if (!dptable || !table1) {
+            alert("No table data to export!");
+            return;
+        }
+
+        const doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'pt',
+            format: 'a4'
+        });
+
+        // Department-specific header styling
+        doc.setFontSize(22);
+        doc.setTextColor(128, 0, 128);
+        doc.text('Department Schedule Overview', 40, 40);
+
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Stream: ${stval}`, 40, 70);
+        doc.text(`Department: ${dpval}`, 40, 85);
+        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 40, 100);
+
+        // Prepare table headers
+        const headers = ['Day/Periods'];
+        for (let i = 1; i <= columns; i++) {
+            headers.push(`Period ${i}`);
+        }
+
+        // Prepare table body with department-specific data structure
+        const body = [];
+        Object.entries(table1)
+            .filter(([days, value]) => days !== "name" && days !== "database" && days !== "_id")
+            .forEach(([day, values]) => {
+                const row = [day];
+                values.forEach((allvalues) => {
+                    let cellContent = '';
+                    if (Array.isArray(allvalues)) {
+                        allvalues.forEach((val, index) => {
+                            if (Array.isArray(val)) {
+                                const formattedVal = val.map((item, i) => 
+                                    (i + 1) % 5 === 0 ? item : `${item}`
+                                ).join(' / ');
+                                cellContent += (index > 0 ? '\n' : '') + formattedVal;
+                            } else {
+                                cellContent += (index > 0 ? '\n' : '') + val;
+                            }
+                        });
+                    }
+                    row.push(cellContent || '');
+                });
+                body.push(row);
+            });
+
+        // Generate PDF table with department-specific styling
+        autoTable(doc, {
+            head: [headers],
+            body: body,
+            startY: 120,
+            styles: {
+                fontSize: 8,
+                cellPadding: 4,
+                overflow: 'linebreak',
+                halign: 'center',
+                valign: 'middle',
+                lineColor: [128, 128, 128],
+                lineWidth: 0.5,
+            },
+            headStyles: {
+                fillColor: [128, 0, 128], // Purple for department
+                textColor: [255, 255, 255],
+                fontSize: 10,
+                fontStyle: 'bold',
+                halign: 'center',
+                cellPadding: 6,
+            },
+            bodyStyles: {
+                fillColor: [255, 255, 255],
+                textColor: [0, 0, 0],
+                fontSize: 7,
+                cellPadding: 3,
+            },
+            alternateRowStyles: {
+                fillColor: [248, 248, 255],
+            },
+            columnStyles: {
+                0: {
+                    fillColor: [229, 204, 255],
+                    fontStyle: 'bold',
+                    halign: 'center',
+                    cellWidth: 80,
+                }
+            },
+            margin: { top: 120, right: 20, bottom: 20, left: 20 },
+            tableWidth: 'auto',
+            theme: 'grid',
+            didDrawPage: function (data) {
+                const pageSize = doc.internal.pageSize;
+                const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+                
+                doc.setFontSize(8);
+                doc.setTextColor(100);
+                doc.text(
+                    `Page ${data.pageNumber} | ${stval} - ${dpval}`,
+                    pageSize.width - 120,
+                    pageHeight - 20
+                );
+                
+                doc.setDrawColor(128, 0, 128);
+                doc.line(20, pageHeight - 30, pageSize.width - 20, pageHeight - 30);
+            }
+        });
+
+        doc.save(`${stval}_${dpval}_Department_Schedule.pdf`);
+    };
+
+    // Advanced PDF Export for Department with Enhanced Features
+    const exportAdvancedPDF = () => {
+        if (!dptable || !table1) {
+            alert("No table data to export!");
+            return;
+        }
+
+        const doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'pt',
+            format: 'a3'
+        });
+
+        // Professional department header
+        doc.setFillColor(128, 0, 128);
+        doc.rect(0, 0, doc.internal.pageSize.getWidth(), 90, 'F');
+        
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(32);
+        doc.text('DEPARTMENT ACADEMIC SCHEDULE', 40, 55);
+
+        // Department information section
+        doc.setFillColor(229, 204, 255);
+        doc.rect(0, 90, doc.internal.pageSize.getWidth(), 60, 'F');
+        
+        doc.setTextColor(128, 0, 128);
+        doc.setFontSize(18);
+        doc.text(`Department: ${dpval} | Stream: ${stval}`, 40, 120);
+        doc.setFontSize(12);
+        doc.text(`Comprehensive Schedule Report Generated: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`, 40, 140);
+
+        // Prepare table data
+        const headers = ['Day/Periods'];
+        for (let i = 1; i <= columns; i++) {
+            headers.push(`Period ${i}`);
+        }
+
+        const body = [];
+        let totalActivities = 0;
+        let totalSlots = 0;
+        const courseOfferings = new Set();
+        const facultyInvolved = new Set();
+
+        Object.entries(table1)
+            .filter(([days, value]) => days !== "name" && days !== "database" && days !== "_id")
+            .forEach(([day, values]) => {
+                const row = [day];
+                values.forEach((allvalues) => {
+                    let cellContent = '';
+                    totalSlots++;
+                    
+                    if (Array.isArray(allvalues)) {
+                        allvalues.forEach((val, index) => {
+                            if (Array.isArray(val)) {
+                                const processedData = [];
+                                let hasContent = false;
+                                val.forEach((item, i) => {
+                                    if (item && item.trim()) {
+                                        hasContent = true;
+                                        // Collect analytics data
+                                        if (i === 0) courseOfferings.add(item); // First element might be course
+                                        if (i === 1) facultyInvolved.add(item);  // Second element might be faculty
+                                        
+                                        if ((i + 1) % 5 === 0) {
+                                            processedData.push(item);
+                                        } else {
+                                            processedData.push(item);
+                                        }
+                                    }
+                                });
+                                if (hasContent) {
+                                    cellContent += (index > 0 ? '\n' : '') + processedData.join(' / ');
+                                    totalActivities++;
+                                }
+                            } else if (val && val.trim()) {
+                                cellContent += (index > 0 ? '\n' : '') + val;
+                                totalActivities++;
+                            }
+                        });
+                    }
+                    row.push(cellContent || 'No Activity');
+                });
+                body.push(row);
+            });
+
+        // Generate enhanced table
+        autoTable(doc, {
+            head: [headers],
+            body: body,
+            startY: 170,
+            styles: {
+                fontSize: 9,
+                cellPadding: 5,
+                overflow: 'linebreak',
+                halign: 'center',
+                valign: 'middle',
+                lineColor: [128, 128, 128],
+                lineWidth: 0.75,
+                minCellHeight: 25,
+            },
+            headStyles: {
+                fillColor: [75, 0, 130],
+                textColor: [255, 255, 255],
+                fontSize: 12,
+                fontStyle: 'bold',
+                halign: 'center',
+                cellPadding: 8,
+            },
+            bodyStyles: {
+                fillColor: [255, 255, 255],
+                textColor: [0, 0, 0],
+                fontSize: 8,
+            },
+            alternateRowStyles: {
+                fillColor: [248, 245, 255],
+            },
+            columnStyles: {
+                0: {
+                    fillColor: [200, 162, 255],
+                    fontStyle: 'bold',
+                    halign: 'center',
+                    cellWidth: 100,
+                }
+            },
+            margin: { top: 170, right: 30, bottom: 30, left: 30 },
+            theme: 'grid',
+            didDrawPage: function (data) {
+                const pageSize = doc.internal.pageSize;
+                const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+                
+                // Enhanced footer for department
+                doc.setFillColor(128, 0, 128);
+                doc.rect(0, pageHeight - 80, pageSize.width, 80, 'F');
+                
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(11);
+                doc.text(
+                    `Page ${data.pageNumber} | Department Management System`,
+                    40,
+                    pageHeight - 45
+                );
+                
+                doc.text(
+                    `${stval} - ${dpval} | ${new Date().toLocaleString()}`,
+                    pageSize.width - 250,
+                    pageHeight - 45
+                );
+            }
+        });
+
+        // Department academic analytics summary
+        const finalY = doc.lastAutoTable.finalY + 40;
+        doc.setFontSize(16);
+        doc.setTextColor(128, 0, 128);
+        doc.text('DEPARTMENT ACADEMIC ANALYTICS', 40, finalY);
+        
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        const utilizationRate = totalSlots > 0 ? ((totalActivities / totalSlots) * 100).toFixed(1) : 0;
+        
+        // Basic Information
+        doc.text(`Stream: ${stval}`, 40, finalY + 25);
+        doc.text(`Department: ${dpval}`, 250, finalY + 25);
+        doc.text(`Report Date: ${new Date().toLocaleDateString()}`, 450, finalY + 25);
+        
+        // Activity Statistics
+        doc.text(`Total Time Slots: ${totalSlots}`, 40, finalY + 45);
+        doc.text(`Active Periods: ${totalActivities}`, 250, finalY + 45);
+        doc.text(`Free Periods: ${totalSlots - totalActivities}`, 450, finalY + 45);
+        
+        // Utilization Metrics
+        doc.text(`Department Utilization: ${utilizationRate}%`, 40, finalY + 65);
+        doc.text(`Course Offerings: ${courseOfferings.size}`, 250, finalY + 65);
+        doc.text(`Faculty Involved: ${facultyInvolved.size}`, 450, finalY + 65);
+        
+        // Status Assessment
+        let performanceStatus = 'Low Activity';
+        if (utilizationRate > 75) performanceStatus = 'High Activity';
+        else if (utilizationRate > 50) performanceStatus = 'Moderate Activity';
+        
+        doc.text(`Performance Status: ${performanceStatus}`, 40, finalY + 85);
+
+        const timestamp = new Date().toISOString().slice(0, 10);
+        doc.save(`${stval}_${dpval}_Advanced_Department_Report_${timestamp}.pdf`);
     };
 
     const gettable = async (collection, name, msg = "") => {
@@ -38,7 +342,6 @@ const Department = (props) => {
         props.scroll();
     };
 
-
     const getdata = async (name1, name, msg = "") => {
         if (name == "") {
             alert(msg)
@@ -56,25 +359,24 @@ const Department = (props) => {
                 const course_d = [...res.values].sort((a, b) => {
                     const isANumeric = !isNaN(a);
                     const isBNumeric = !isNaN(b);
-        
+
                     if (isANumeric && isBNumeric) {
-                      return parseInt(a) - parseInt(b);
+                        return parseInt(a) - parseInt(b);
                     }
-        
+
                     if (!isANumeric && !isBNumeric) {
-                      return a.localeCompare(b);
+                        return a.localeCompare(b);
                     }
                     if (isANumeric != "" || isANumeric != " ") {
-                      return isANumeric ? 1 : -1;
+                        return isANumeric ? 1 : -1;
                     }
-                  });
+                });
                 setdepartment1(course_d)
             }
         };
-
     };
 
-    const normal = () =>{
+    const normal = () => {
         setstval("");
         setdpval("");
         setdptable(false)
@@ -104,7 +406,7 @@ const Department = (props) => {
                                             <div className="flex flex-col min-w-44 w-auto min-h-20 text-xs">
                                                 {allvalues.map((val, x) => (
                                                     <div key={x} className=" whitespace-nowrap text-xs border-b-[0.5px] border-black">
-                                                        {[...Array(val.length)].map((_, i) => ((i+1) % 5 == 0 ? <><span key={i}>{val[i]}</span></>:<span key={i}>{val[i]}&nbsp;/&nbsp;</span>))}
+                                                        {[...Array(val.length)].map((_, i) => ((i + 1) % 5 == 0 ? <><span key={i}>{val[i]}</span></> : <span key={i}>{val[i]}&nbsp;/&nbsp;</span>))}
                                                     </div>
                                                 ))}
                                             </div>
@@ -117,7 +419,6 @@ const Department = (props) => {
                 </div>
             </>
         )
-
     }
 
     return (
@@ -145,19 +446,47 @@ const Department = (props) => {
                 >
                     Get Table
                 </button>
+                
                 {dptable && randertable()}
-                {dptable && (<><button
-                        onClick={normal}
-                        className=" self-center w-60 mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Back
-                    </button>
-                    <button
-                    onClick={exportTableToExcel}
-                    className=" self-center w-60 mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Export to Excel
-                </button></>)}
+                
+                {dptable && (
+                    <div className="flex flex-col items-center gap-3 mt-4">
+                        <button
+                            onClick={normal}
+                            className="w-60 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Back
+                        </button>
+                        
+                        {/* Export Options */}
+                        <div className="flex flex-wrap justify-center gap-3">
+                            <button
+                                onClick={exportTableToExcel}
+                                className="w-48 bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded shadow-lg transition-colors"
+                            >
+                                📊 Export to Excel
+                            </button>
+                            
+                            <button
+                                onClick={exportTableToPDF}
+                                className="w-48 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transition-colors"
+                            >
+                                📄 Export to PDF
+                            </button>
+                            
+                            <button
+                                onClick={exportAdvancedPDF}
+                                className="w-48 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded shadow-lg transition-colors"
+                            >
+                                📋 Advanced PDF
+                            </button>
+                        </div>
+                        
+                        <p className="text-xs text-gray-600 mt-2 text-center">
+                            Choose from Excel, Standard PDF, or Advanced PDF with academic analytics
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     )
